@@ -1,0 +1,24 @@
+<h2>Attribuer un programme</h2>
+
+<form [formGroup]="assignForm" (ngSubmit)="onSubmit()">
+  <label>Utilisateur :</label>
+  <select formControlName="user_id">
+    <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
+  </select>
+
+  <label>Programme :</label>
+  <select formControlName="programme_id">
+    <option *ngFor="let prog of programmes" [value]="prog.id">{{ prog.nom }}</option>
+  </select>
+
+  <label>Coach (optionnel) :</label>
+  <select formControlName="coach_id">
+    <option value="">-- Aucun coach --</option>
+    <option *ngFor="let coach of coaches" [value]="coach.id">{{ coach.name }}</option>
+  </select>
+
+  <button type="submit">Attribuer</button>
+</form>
+
+<div *ngIf="successMessage" style="color: green">{{ successMessage }}</div>
+<div *ngIf="errorMessage" style="color: red">{{ errorMessage }}</div>

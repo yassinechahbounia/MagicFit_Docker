@@ -1,0 +1,31 @@
+<br />
+<div class="reservation-container">
+  <h2>📅 Réservation Facile</h2>
+
+  <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
+    <input formControlName="nom" placeholder="Votre nom" />
+    <input formControlName="email" placeholder="Votre email" type="email" />
+
+    <select class="form-control" formControlName="type" required>
+      <option value="Cours Collectif">Cours Collectif</option>
+      <option value="Coaching Privé">Coaching Privé</option>
+    </select>
+
+    <input type="date" formControlName="date" />
+    <input type="time" formControlName="heure" />
+    <!-- ******************************************* -->
+    <!-- <input type="timestamp" formControlName="created_at" />
+    <input type="timestamp" formControlName="updated_at" /> -->
+    <!-- *********************************************** -->
+    <button type="submit" [disabled]="!reservationForm.valid">Réserver</button>
+  </form>
+
+  <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+  <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+</div>
+<div class="reservation-container">
+  <!--  Bouton visible uniquement si l'utilisateur connecté est admin -->
+  <button *ngIf="isAdmin()" routerLink="/admin/reservations">
+    Gérer les Réservations
+  </button>
+</div>

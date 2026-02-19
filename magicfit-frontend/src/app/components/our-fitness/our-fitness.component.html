@@ -1,0 +1,78 @@
+<div class="container">
+  <h2 class="text-white mb-4 border-bottom border-light pb-3">Notre condition Physique</h2>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+    <!-- Exemples de cartes (x4) -->
+    <div class="col">
+      <div
+        class="card h-100 text-center bg-transparent text-white border border-light shadow"
+      >
+        <div class="p-3">
+          <img
+            src="\assets\images\our fitness\calorie calculator.webp"
+            class="mb-3"
+            style="width: 236px; height: 223px"
+            alt="calorie calculator"
+          />
+          <h5 class="card-title text-warning">CALCULATEUR DE CALORIE</h5>
+          <p class="card-text"></p>
+          <a [routerLink]="['/calorie-calculator']" class="btn btn-outline-light">En savoir plus</a>
+        </div>
+      </div>
+    </div>
+    <!-- BMI CALCULATOR -->
+    <div class="col">
+      <div
+        class="card h-100 text-center bg-transparent text-white border border-light shadow"
+      >
+        <div class="p-3">
+          <img
+            src="assets/images/our fitness/bmi_image.jpg"
+            class="mb-3"
+            style="width: 236px; height: 223px"
+            alt="BMI CALCULALTOR"
+          />
+          <h5 class="card-title text-warning">CALCULATEUR D'IMC</h5>
+          <p class="card-text"></p>
+          <a [routerLink]="['/bmi-calculator']" class="btn btn-outline-light">En savoir plus</a>        </div>
+      </div>
+    </div>
+
+    <!-- Program 3 -->
+    <div class="col">
+      <div
+        class="card h-100 text-center bg-transparent text-white border border-light shadow"
+      >
+        <div class="p-3">
+          <img
+            src="assets/images/our fitness/Macronutrient-Goals.webp"
+            class="mb-3"
+            style="width: 236px; height: 223px"
+            alt="Macronutrient Goals"
+          />
+          <h5 class="card-title text-warning">CALCULALTEUR MACRONUTRIMENT</h5>
+          <p class="card-text"></p>
+          <a [routerLink]="['/macronutrient-calculator']" class="btn btn-outline-light">En savoir plus</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Program 4 : Gym Plan-->
+    <div class="col">
+      <div
+        class="card h-100 text-center bg-transparent text-white border border-light shadow"
+      >
+        <div class="p-3">
+          <img
+            src="\assets\images\our fitness\GOAL-SETTING-TOOL.webp"
+            class="mb-3"
+            style="width: 236px; height: 223px"
+            alt="GOAL SETTING TOOL"
+          />
+          <h5 class="card-title text-warning">DEFINITION DES OBJECTIFS</h5>
+          <p class="card-text"></p>
+          <a [routerLink]="['/goal-setting']" class="btn btn-outline-light">En savoir plus</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<section class="mt-5 py-5 bg-black">
+  <div class="container">
+    <h2 class="text-white text-center mb-5 border-bottom border-secondary pb-3">
+      🎯 Our Programs
+    </h2>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
+      <!-- Programmes statiques -->
+      <div class="col" *ngFor="let prog of staticPrograms">
+        <div class="custom-card h-100 d-flex flex-column align-items-center text-center">
+          <img [src]="'assets/icons/' + prog.icon" alt="Icone" class="program-icon mb-3" />
+          <h5 class="text-uppercase text-warning fw-bold">{{ prog.title }}</h5>
+          <p class="text-light small">{{ prog.description }}</p>
+          <a [routerLink]="['/programme', prog.id]" class="btn btn-outline-warning mt-auto">Learn More</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🔘 Bouton Voir les Programmes / Voir Moins -->
+    <div class="text-center mt-4">
+      <button class="btn btn-warning" *ngIf="!afficherTous" (click)="afficherTousLesProgrammes()">👀 Voir les Programmes</button>
+      <button class="btn btn-secondary" *ngIf="afficherTous" (click)="masquerProgrammes()">🔽 Voir Moins</button>
+    </div>
+
+    <!-- 🔽 Programmes dynamiques API -->
+    <section *ngIf="afficherTous" id="available" class="bg-dark text-white py-5 mt-5">
+      <h3 class="mb-4 border-bottom border-secondary pb-2">Available Programs</h3>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <div class="col" *ngFor="let prog of programmes">
+          <div class="card bg-secondary h-100 text-white">
+            <img [src]="'assets/images/' + prog.image" class="card-img-top" [alt]="prog.nom" />
+            <div class="card-body">
+              <h5 class="card-title text-warning">{{ prog.nom }}</h5>
+              <p class="card-text">{{ prog.description }}</p>
+              <p class="text-muted small">Catégorie: {{ prog.categorie }}</p>
+              <a [routerLink]="['/programme', prog.id]" class="btn btn-outline-light">Learn More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</section>

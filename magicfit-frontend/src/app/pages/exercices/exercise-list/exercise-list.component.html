@@ -1,0 +1,15 @@
+<div *ngIf="exercises.length" class="mt-4">
+  <h4 class="text-white">Exercices pour {{ muscle }}</h4>
+  <ul class="list-group">
+    <li *ngFor="let ex of exercises" class="list-group-item d-flex flex-column flex-md-row align-items-center bg-dark text-white mb-2">
+  <img [src]="ex.gif" [alt]="ex.name" style="width: 120px;" class="me-3 rounded">
+
+  <div class="d-flex flex-column">
+    <span style="font-weight: bold;">{{ ex.name }}</span>
+    <small *ngIf="ex.programme">🎯 Programme : {{ ex.programme.nom }}</small>
+    <small *ngIf="!ex.programme" class="text-muted">Aucun programme associé</small>
+  </div>
+</li>
+
+  </ul>
+</div>

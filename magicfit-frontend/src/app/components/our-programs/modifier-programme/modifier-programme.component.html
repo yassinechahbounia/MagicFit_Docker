@@ -1,0 +1,58 @@
+<div class="container mt-5 text-white">
+  <h2 class="text-center text-warning mb-4">✏️ Modifier le Programme</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="bg-dark p-4 rounded shadow">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label">Nom</label>
+        <input type="text" class="form-control" formControlName="nom">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Catégorie</label>
+        <input type="text" class="form-control" formControlName="categorie">
+      </div>
+
+      <div class="col-12">
+        <label class="form-label">Description</label>
+        <textarea class="form-control" rows="3" formControlName="description"></textarea>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label">Objectifs</label>
+        <input type="text" class="form-control" formControlName="objectifs">
+      </div>
+
+      <div class="col-12">
+        <label class="form-label">Nutrition (liste séparée par virgule)</label>
+        <input type="text" class="form-control"
+       [value]="form.value.nutrition?.join(', ')"
+       (input)="onNutritionInput($event)">
+
+      </div>
+
+      <div class="col-12">
+        <label class="form-label">Image (facultatif)</label>
+        <input type="text" class="form-control" formControlName="image">
+      </div>
+
+      <div class="col-12">
+        <label class="form-label">Exercices associés</label>
+        <div class="row">
+          <div class="col-md-4 mb-2" *ngFor="let ex of exercicesDispo">
+            <div class="form-check">
+              <input class="form-check-input"
+                     type="checkbox"
+                     [checked]="form.value.exercices?.includes(ex.id)"
+                     (change)="toggleExercice(ex.id)">
+              <label class="form-check-label">{{ ex.nom }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-warning mt-4" [disabled]="form.invalid">✅ Enregistrer</button>
+    <a routerLink="/coach" class="btn btn-secondary mt-4 ms-2">← Retour</a>
+  </form>
+</div>

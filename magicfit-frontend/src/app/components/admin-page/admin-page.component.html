@@ -1,0 +1,10 @@
+<div class="container mt-5 text-white">
+  <h2 class="text-center mb-4">👤 Tableau de bord personnalisé</h2>
+
+  <ng-container [ngSwitch]="role">
+    <app-admin-tools *ngSwitchCase="'admin'"></app-admin-tools>
+    <app-coach-tools *ngSwitchCase="'coach'"></app-coach-tools>
+    <app-client-tools *ngSwitchCase="'client'"></app-client-tools>
+    <div *ngSwitchDefault class="text-danger">Rôle inconnu ou utilisateur non authentifié.</div>
+  </ng-container>
+</div>

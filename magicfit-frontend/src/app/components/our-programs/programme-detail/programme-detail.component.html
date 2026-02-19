@@ -1,0 +1,37 @@
+<div class="container mt-5 text-white">
+  <h2 class="mb-4 border-bottom pb-2">🧾 Détails du Programme</h2>
+
+  <div *ngIf="programme">
+    <div class="card p-4 bg-dark text-light">
+      <h3>{{ programme.nom }}</h3>
+      <p><strong>Description:</strong> {{ programme.description }}</p>
+      <p><strong>Catégorie:</strong> {{ programme.categorie }}</p>
+      <p><strong>Objectif:</strong> {{ programme.objectif }}</p>
+
+      <div *ngIf="programme.nutrition?.length">
+        <p><strong>Nutrition:</strong></p>
+        <ul>
+          <li *ngFor="let item of programme.nutrition">{{ item }}</li>
+        </ul>
+      </div>
+
+      <div *ngIf="programme.exercices?.length">
+        <p><strong>Exercices Associés :</strong></p>
+        <ul class="list-unstyled">
+          <li *ngFor="let ex of programme.exercices">
+            <span class="badge bg-secondary">{{ ex.nom }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="mt-3">
+        <img
+          [src]="'assets/images/' + programme.image"
+          class="img-fluid rounded"
+          alt="Image du programme"
+          style="max-width: 300px;"
+        />
+      </div>
+    </div>
+  </div>
+</div>

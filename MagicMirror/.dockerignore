@@ -1,0 +1,48 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+README_v2.md
+CHANGELOG.md
+LICENSE.md
+Collaboration.md
+*.md
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Node.js
+node_modules
+npm-debug.log*
+
+# Tests
+tests
+jest.config.js
+
+# IDE & outils dev
+.vscode
+.idea
+.husky
+.editorconfig
+.markdownlint.json
+.prettierignore
+.stylelintrc.json
+cspell.config.json
+eslint.config.mjs
+prettier.config.mjs
+module-types.ts
+.npmrc
+
+# Assets non critiques
+mm2.png
+
+# Config samples (optionnel - garde si tu veux une config par défaut)
+config/*.sample
+
+# Electron (inutile en mode server)
+js/electron.js
+

@@ -1,0 +1,40 @@
+<div class="container mt-5 text-white">
+  <div class="wrapper mx-auto px-3 py-4 bg-dark rounded shadow" style="max-width: 500px;">
+    <h5 class="card-title text-warning text-center mb-3">CALORIE CALCULATOR</h5>
+    <input
+      type="text"
+      [(ngModel)]="query"
+      class="form-control bg-dark text-light border border-warning mb-3"
+      placeholder="🍎 Enter a food (e.g. banana)"
+      style="font-weight: bold"
+    />
+    <button
+      class="btn btn-warning fw-bold w-100 mb-3"
+      (click)="getCalorieInfo()"
+    >
+      🔍 Search
+    </button>
+    <div
+      *ngIf="showCalorieDetails"
+      class="text-start bg-black border border-info rounded p-3 shadow"
+    >
+      <h6 class="text-warning border-bottom pb-1 mb-2">
+        Result for : <span class="text-light">{{ query }}</span>
+      </h6>
+      <div *ngFor="let item of calorieInfo.items">
+        <p class="mb-1 text-white">
+          🔥 <strong>Calories</strong> : {{ item.calories }}
+        </p>
+        <p class="mb-1 text-white">
+          🍞 <strong>Carbohydrates</strong> : {{ item.carbohydrates_total_g }} g
+        </p>
+        <p class="mb-1 text-white">
+          🥩 <strong>Proteines</strong> : {{ item.protein_g }} g
+        </p>
+        <p class="mb-0 text-white">
+          🧈 <strong>Fats</strong> : {{ item.fat_total_g }} g
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

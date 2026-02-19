@@ -1,0 +1,31 @@
+<div class="container mt-5">
+  <div class="d-flex flex-row align-items-start gap-4 flex-wrap">
+    
+    <!-- 🧭 La carte interactive à gauche -->
+    <div class="interactive-area position-relative" style="flex: 1 1 300px; max-width: 400px;">
+      <img src="assets/images/map.svg" alt="Muscle Map" class="img-fluid w-100">
+
+      <button (click)="showExercises('Chest')" class="interactive-button btn btn-danger" style="top: 21%; left: 76%;">Chest</button>
+      <button (click)="showExercises('Biceps')" class="interactive-button btn btn-danger" style="top: 29%; left: 76%;">Biceps</button>
+      <button (click)="showExercises('Legs')" class="interactive-button btn btn-danger" style="top: 73%; left: 70%;">Legs</button>
+      <button (click)="showExercises('Triceps')" class="interactive-button btn btn-danger" style="top: 27%; left: 4%;">Triceps</button>
+      <button (click)="showExercises('Shoulders')" class="interactive-button btn btn-danger" style="top: 18%; left: 3%;">Shoulders</button>
+      <button (click)="showExercises('Abds')" class="interactive-button btn btn-danger" style="top: 36%; left: 5%;">Abds</button>
+      <button (click)="showExercises('Forearms')" class="interactive-button btn btn-danger" style="top: 60%; left: 74.5%;">Forearms</button>
+      <button (click)="showExercises('Calves')" class="interactive-button btn btn-danger" style="top: 72%; left: 15%;">Calves</button>
+    </div>
+
+    <!-- 🏋️‍♂️ Les exercices (inchangés, toujours à droite) -->
+    <div style="flex: 2 1 600px;" *ngIf="selectedExercises.length" id="exerciseList">
+      <h4 class="text-white mt-4">Exercices pour : <span>{{ selectedMuscle }}</span></h4>
+      <ul class="list-group">
+        <li *ngFor="let ex of selectedExercises"
+            class="list-group-item d-flex flex-column flex-md-row align-items-center bg-dark text-white mb-2">
+          <img [src]="ex.gif" [alt]="ex.name" class="me-3 rounded" style="width: 120px; height: auto;">
+          <span class="fw-bold">{{ ex.name }}</span>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</div>

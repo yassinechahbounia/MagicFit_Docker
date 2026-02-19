@@ -1,0 +1,62 @@
+<div class="container my-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="bg-dark text-white p-4 rounded shadow border border-warning">
+            <h2 class="text-warning mb-4 text-center">🎯 Définir un Objectif</h2>
+
+            <div class="mb-3">
+              <label for="objectif" class="form-label">Objectif</label>
+              <input
+                type="text"
+                id="objectif"
+                [(ngModel)]="objectif"
+                class="form-control bg-dark text-light border border-warning"
+                placeholder="Par ex: Perdre 5kg"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="date" class="form-label">Date limite</label>
+              <input
+                type="date"
+                id="date"
+                [(ngModel)]="date"
+                class="form-control bg-dark text-light border border-warning"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="note" class="form-label">Note</label>
+              <textarea
+                id="note"
+                [(ngModel)]="note"
+                rows="3"
+                class="form-control bg-dark text-light border border-warning"
+                placeholder="Note facultative"
+              ></textarea>
+            </div>
+
+            <button class="btn btn-warning w-100 fw-bold" (click)="ajouterObjectif()">
+              💾 Enregistrer
+            </button>
+
+            <div *ngIf="message" class="alert alert-success mt-3" role="alert">
+              {{ message }}
+            </div>
+          </div>
+
+          <div class="mt-5" *ngIf="objectifs.length > 0">
+            <h4 class="text-white border-bottom pb-2">📋 Mes Objectifs</h4>
+            <ul class="list-group">
+              <li
+                *ngFor="let obj of objectifs"
+                class="list-group-item bg-dark text-light border border-secondary mt-2"
+              >
+                <strong>{{ obj.objectif }}</strong> – à atteindre avant le <strong>{{ obj.date }}</strong>
+                <p class="mb-0"><em>{{ obj.note }}</em></p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>

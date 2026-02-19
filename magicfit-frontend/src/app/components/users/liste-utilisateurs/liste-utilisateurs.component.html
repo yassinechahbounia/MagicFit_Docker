@@ -1,0 +1,10 @@
+<div class="container mt-5 text-white">
+  <h2>Liste des utilisateurs</h2>
+
+  <ul class="list-group">
+    <li *ngFor="let u of utilisateurs" class="list-group-item d-flex justify-content-between align-items-center bg-dark text-white mb-2">
+      {{ u.nom }} - {{ u.email }}
+      <button class="btn btn-danger btn-sm" (click)="supprimer(u.id)">🗑️ Supprimer</button>
+    </li>
+  </ul>
+</div>

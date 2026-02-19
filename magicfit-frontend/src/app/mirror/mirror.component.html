@@ -1,0 +1,36 @@
+<div class="mirror-container">
+  <h2>Interface MagicMirror</h2>
+
+  <div class="mirror-status" *ngIf="!isMirrorLoaded">
+    <div class="alert alert-info">
+      <strong>Chargement du miroir...</strong>
+      <p>Assurez-vous que MagicMirror est démarré sur le port 8081.</p>
+      <button class="btn btn-primary" (click)="checkMirrorStatus()">Vérifier le statut</button>
+    </div>
+  </div>
+
+  <div class="mirror-iframe-container" *ngIf="isMirrorLoaded">
+    <iframe
+      #mirrorFrame
+      src="http://localhost:8081"
+      width="100%"
+      height="600px"
+      style="border: 2px solid #007bff; border-radius: 8px; background-color: #000;">
+    </iframe>
+  </div>
+
+  <div class="mirror-controls mt-3">
+    <button class="btn btn-danger me-2" (click)="cacher()">Cacher l'horloge</button>
+    <button class="btn btn-success me-2" (click)="afficher()">Afficher l'horloge</button>
+    <button class="btn btn-warning" (click)="refreshMirror()">Actualiser le miroir</button>
+  </div>
+
+  <div class="mirror-info mt-3" *ngIf="mirrorError">
+    <div class="alert alert-danger">
+      <strong>Erreur de chargement du miroir</strong>
+      <p>{{ mirrorError }}</p>
+      <p>Vérifiez que MagicMirror est bien démarré avec la commande : <code>npm start</code></p>
+    </div>
+  </div>
+</div>
+

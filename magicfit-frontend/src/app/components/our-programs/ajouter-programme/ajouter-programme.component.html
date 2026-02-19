@@ -1,0 +1,59 @@
+<div class="container mt-5 text-white">
+  <h2 class="text-center mb-4"><i class="bi bi-plus-circle"></i> Ajouter un Programme</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="bg-dark p-4 rounded shadow">
+    <div class="row g-3">
+
+      <div class="col-md-6">
+        <label class="form-label">Nom</label>
+        <input formControlName="nom" type="text" class="form-control" placeholder="Nom du programme">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Catégorie</label>
+        <input formControlName="categorie" type="text" class="form-control" placeholder="Catégorie">
+      </div>
+
+      <div class="col-md-12">
+        <label class="form-label">Description</label>
+        <textarea formControlName="description" rows="3" class="form-control" placeholder="Description du programme"></textarea>
+      </div>
+
+      <div class="col-md-12">
+        <label class="form-label">Image (facultative)</label>
+        <input formControlName="image" type="text" class="form-control" placeholder="Lien ou nom d'image">
+      </div>
+
+      <div class="col-md-12">
+        <label class="form-label">Action (facultative)</label>
+        <input formControlName="action" type="text" class="form-control" placeholder="Action associée (ex : Cardio, Renforcement...)">
+      </div>
+
+      <div class="col-md-12">
+        <label class="form-label">Exercices associés</label>
+        <div class="row">
+          <div class="col-6 col-md-4 col-lg-3 mb-2" *ngFor="let ex of exercicesDisponibles">
+            <div class="">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                [value]="ex.id"
+                (change)="onCheckboxChange($event)"
+                [id]="'ex-' + ex.id"
+              >
+              <label class="form-check-label" [for]="'ex-' + ex.id">
+                {{ ex.nom }}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 mt-3 text-center">
+        <button type="submit" class="btn btn-success px-4">
+          <i class="bi bi-check-circle"></i> Ajouter
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

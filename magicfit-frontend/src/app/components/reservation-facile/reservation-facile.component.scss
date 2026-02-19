@@ -1,0 +1,47 @@
+.reservation-container {
+  max-width: 500px;
+  margin: auto;
+  padding: 2rem;
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(255, 193, 7, 0.4);
+
+  h2 {
+    color: #ffc107;
+    text-align: center;
+  }
+
+  input, select {
+    width: 100%;
+    padding: 0.7rem;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+  }
+
+  button {
+    width: 100%;
+    padding: 0.8rem;
+    background: #ffc107;
+    border: none;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background: #e0a800;
+    }
+  }
+
+  .success {
+    color: #28a745;
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  .error {
+    color: #dc3545;
+    text-align: center;
+    margin-top: 1rem;
+  }
+}

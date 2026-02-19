@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+// @import 'node_modules/bootstrap/dist/css/bootstrap.min.css';
+
+@import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap');
+
+body {
+  background: radial-gradient(circle at top right, #ff4400 0%, #111 60%);
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+
+  padding-top: 70px; /* Ajuste à la hauteur de ta navbar */
+}
+html {
+  scroll-behavior: smooth;
+}

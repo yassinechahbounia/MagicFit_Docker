@@ -1,0 +1,33 @@
+<div class="container mt-4 text-white">
+  <h2 class="mb-4">✏️ Modifier l'Utilisateur</h2>
+
+  <form
+    [formGroup]="utilisateurForm"
+    (ngSubmit)="onSubmit()"
+    class="bg-dark p-4 rounded shadow"
+  >
+    <div class="mb-3">
+      <label>Nom</label>
+      <input type="text" formControlName="name" class="form-control" />
+    </div>
+    <div class="mb-3">
+      <label>Email</label>
+      <input type="email" formControlName="email" class="form-control" />
+    </div>
+    <div class="mb-3">
+      <label for="role">Rôle</label>
+      <select formControlName="role" class="form-control" id="role">
+        <option value="utilisateur">Utilisateur</option>
+        <option value="coach">Coach</option>
+        <option value="admin">Admin</option>
+      </select>
+    </div>
+    <button
+      type="submit"
+      class="btn btn-info"
+      [disabled]="utilisateurForm.invalid"
+    >
+      Enregistrer
+    </button>
+  </form>
+</div>

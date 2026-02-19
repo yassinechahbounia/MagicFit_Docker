@@ -1,0 +1,124 @@
+.dashboard-container {
+  padding: 2rem;
+  background-color: #121212; // noir profond
+  border-radius: 12px;
+  color: #f1f1f1;
+}
+
+.dashboard-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #ff4c4c; // rouge principal
+  font-weight: bold;
+}
+
+/* Cartes de section */
+.dashboard-card {
+  background-color: #1e1e1e;
+  border-left: 6px solid;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.border-red {
+  border-color: #ff4c4c;
+}
+
+.border-yellow {
+  border-color: #ffd369;
+}
+
+.border-black {
+  border-color: #000;
+}
+
+/* En-têtes */
+.dashboard-header {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+}
+
+/* Boutons toggle */
+.btn-section {
+  background-color: transparent;
+  color: #ff4c4c;
+  border: 2px solid #ff4c4c;
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.btn-section:hover {
+  background-color: #ff4c4c;
+  color: #121212;
+}
+
+/* Boutons CRUD */
+.btn-success {
+  background-color: #ffd369;
+  color: #000;
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: #f9b938;
+}
+
+.btn-info {
+  background-color: #4b6cb7;
+  color: #fff;
+}
+
+.btn-info:hover {
+  background-color: #3a58a5;
+}
+
+.btn-danger {
+  background-color: #ff4c4c;
+  color: #fff;
+}
+
+.btn-danger:hover {
+  background-color: #e60000;
+}
+
+/* Table responsive */
+.table {
+  font-size: 0.9rem;
+}
+
+.table img {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .dashboard-container {
+    padding: 1rem;
+  }
+
+  .dashboard-card {
+    padding: 1rem;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-section {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .table th,
+  .table td {
+    font-size: 0.8rem;
+  }
+}

@@ -1,0 +1,31 @@
+<h2>Mes utilisateurs assignés</h2>
+
+<ul *ngFor="let user of allUsers">
+  <li>
+    <strong>{{ user.name }}</strong>
+    <ul>
+      <li *ngFor="let prog of user.programmes">
+        Programme : {{ prog.nom }}
+      </li>
+    </ul>
+  </li>
+</ul>
+
+
+<h2>Gérer les affectations</h2>
+
+<label>Utilisateur :
+  <select [(ngModel)]="selectedUserId">
+    <option *ngFor="let user of allUsers" [value]="user.id">{{ user.name }}</option>
+  </select>
+</label>
+
+<label>Programme :
+  <select [(ngModel)]="selectedProgrammeId">
+    <option *ngFor="let prog of programmes" [value]="prog.id">{{ prog.nom }}</option>
+  </select>
+</label>
+
+<button (click)="assignUser()">Assigner</button>
+<button (click)="unassignUser()">Désassigner</button>
+

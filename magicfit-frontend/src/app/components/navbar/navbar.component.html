@@ -1,0 +1,49 @@
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top shadow">  
+  <div class="container">
+    <!-- Logo -->
+    <a class="navbar-brand d-flex align-items-center" routerLink="/">
+      <img src="assets/images/svg_Logo.svg" alt="MagicFit" style="height: 40px;" class="me-2">
+      <div>
+        <div class="fw-bold" style="font-size: 1.3rem;">MagicFit</div>
+        <small style="color: #bbb;">Transform Your Body</small>
+      </div>
+    </a>
+
+    <!-- Toggle button mobile -->
+    <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Menu -->
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav align-items-center">
+        <!-- Liens communs -->
+        <li class="nav-item"><a class="nav-link active" routerLink="">Accueil</a></li>
+        <li class="nav-item"><a class="nav-link active" routerLink="/programmes">Programmes</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/coaching">Coaching</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/suivis">Suivis</a></li>
+        <li class="nav-item"><a href ="#aboutUs" class="nav-link">About Us</a></li>
+        <li class="nav-item" *ngIf="user?.role === 'coach'">
+          <a class="nav-link text-warning" routerLink="/coach">Espace Coach</a>
+        </li>
+        <li class="nav-item" *ngIf="user?.role === 'admin'">
+          <a class="nav-link text-info" routerLink="/admin">Profil</a>
+        </li>
+      </ul>
+
+      <!-- Auth --> 
+      <ng-container *ngIf="!isAuthenticated(); else loggedInBlock">
+        <button type="button" class="btn btn-outline-light ms-3" (click)="login()">Connexion</button>
+         <button type="button" class="btn btn-danger ms-2" (click)="register()">Inscription</button>
+      </ng-container>
+
+      <ng-template #loggedInBlock>
+        <span class="text-white me-3">Bienvenue {{ user?.name }}</span>
+        <button (click)="logout()" class="btn btn-outline-danger">Déconnexion</button>
+      </ng-template>
+    </div>
+  </div>
+</nav>
+<router-outlet>
+
+</router-outlet>

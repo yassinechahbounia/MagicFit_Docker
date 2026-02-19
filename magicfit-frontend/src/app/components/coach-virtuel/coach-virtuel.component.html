@@ -1,0 +1,85 @@
+<div class="container py-4 messenger-container">
+  <div class="chat-wrapper bg-dark text-white p-4 rounded shadow-lg">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="mb-0">🤖 Coach Virtuel IA</h2>
+      <button class="btn btn-outline-danger btn-sm" (click)="viderChat()">🗑 Vider le chat</button>
+    </div>
+
+    <!-- Messages -->
+    <div class="chat-box mb-4">
+      <div *ngFor="let msg of historique; let i = index" class="message-row" [ngClass]="msg.role">
+        <div class="message-bubble">
+          <span>{{ msg.role === 'user' ? '👤' : '🤖' }} {{ msg.content }}</span>
+          <div *ngIf="msg.role === 'assistant'" class="bubble-actions">
+            <button class="btn btn-sm btn-light" (click)="modifierReponse(i)">✏</button>
+            <button class="btn btn-sm btn-danger" (click)="supprimerReponse(i)">❌</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Input -->
+    <div class="input-group mb-3">
+      <textarea [(ngModel)]="question" rows="2" class="form-control" placeholder="Pose ta question..."></textarea>
+      <button class="btn btn-success" (click)="poserQuestion()" [disabled]="loading || !question.trim()">
+        <span *ngIf="!loading">📤</span>
+        <span *ngIf="loading">⏳</span>
+      </button>
+    </div>
+
+    <!-- Immediate response -->
+    <div *ngIf="reponse && !loading" class="alert alert-info mt-3">
+      <strong>Réponse IA :</strong> {{ reponse }}
+    </div>
+
+    <!-- Error -->
+    <div *ngIf="error" class="alert alert-danger mt-3">
+      <strong>Erreur :</strong> {{ error }}
+    </div>
+
+  </div>
+</div>
+
+<!-- Styles -->
+<style scoped>
+  .messenger-container {
+    max-width: 600px;
+    margin: auto;
+  }
+  .chat-box {
+    max-height: 350px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .message-row.user {
+    align-self: flex-end;
+    text-align: right;
+  }
+  .message-row.assistant {
+    align-self: flex-start;
+    text-align: left;
+  }
+  .message-bubble {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 15px;
+    position: relative;
+    max-width: 75%;
+    word-wrap: break-word;
+  }
+  .message-row.assistant .message-bubble {
+    background-color: #28a745;
+  }
+  .bubble-actions {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    gap: 5px;
+  }
+</style>

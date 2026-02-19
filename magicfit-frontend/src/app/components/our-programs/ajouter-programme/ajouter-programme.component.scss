@@ -1,0 +1,60 @@
+.container {
+  max-width: 960px;
+  margin: auto;
+  color: #fff;
+
+  h2 {
+    color: #ffc107;
+    border-bottom: 2px solid #ffc107;
+    padding-bottom: 10px;
+  }
+
+  form {
+    background-color: #1c1c1c;
+    border: 1px solid #333;
+    padding: 2rem;
+    border-radius: 12px;
+
+    .form-label {
+      font-weight: 600;
+    }
+
+    .form-control, textarea {
+      background-color: #2a2a2a;
+      border: 1px solid #444;
+      color: #fff;
+
+      &:focus {
+        border-color: #ffc107;
+        box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+      }
+    }
+
+    .form-check {
+      background-color: #2b2b2b;
+      border: 1px solid #444;
+      padding: 0.5rem;
+      border-radius: 8px;
+
+      .form-check-input {
+        accent-color: #ffc107;
+      }
+
+      .form-check-label {
+        margin-left: 0.5rem;
+      }
+    }
+
+    button {
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 0.5rem 2rem;
+      border-radius: 8px;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: #28a745;
+      }
+    }
+  }
+}

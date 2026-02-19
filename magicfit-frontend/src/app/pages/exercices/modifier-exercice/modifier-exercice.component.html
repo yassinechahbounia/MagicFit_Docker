@@ -1,0 +1,38 @@
+<div class="container mt-5 text-white">
+  <h2 class="text-center mb-4 border-bottom pb-2">✏️ Modifier un Exercice</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="bg-dark p-4 rounded shadow border border-info">
+    <div class="mb-3">
+      <label class="form-label">Nom</label>
+      <input type="text" class="form-control" formControlName="nom" placeholder="Ex: Squat">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Description</label>
+      <textarea class="form-control" formControlName="description" rows="3"></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Image (URL ou nom de fichier)</label>
+      <input type="text" class="form-control" formControlName="image" placeholder="exercice1.jpg">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Muscle ciblé</label>
+      <input type="text" class="form-control" formControlName="muscle" placeholder="Ex: Jambes, Dos">
+    </div>
+
+    <div class="mb-3">
+  <label class="form-label">Programme</label>
+  <select class="form-select" formControlName="programme_id">
+    <option value="" disabled>-- Sélectionner un programme --</option>
+    <option *ngFor="let programme of programmes" [value]="programme.id">
+      {{ programme.nom }}
+    </option>
+  </select>
+</div>
+
+
+    <button type="submit" [disabled]="form.invalid" class="btn btn-info w-100">Modifier l'exercice</button>
+  </form>
+</div>

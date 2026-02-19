@@ -1,0 +1,47 @@
+<section class="mt-5 py-5">
+  <div class="container">
+    <h2 class="text-white text-center mb-4 border-bottom border-light pb-3">Notre Programmes</h2>
+
+    <div *ngIf="programmesAffiches.length === 0" class="text-center text-muted">
+      No programs available.
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+      <div *ngFor="let prog of programmesAffiches" class="col">
+        <div class="card h-100 text-center bg-transparent text-white border border-light shadow">
+          <div class="p-3">
+            <img
+              [src]="prog.image?.startsWith('http') ? prog.image : 'assets/images/' + prog.image"
+              class="rounded-circle mb-3"
+              style="width: 80px; height: 80px;"
+              alt="{{ prog.nom }}"
+            />
+            <h5 class="card-title text-warning">{{ prog.nom }}</h5>
+            <p class="card-text">{{ prog.description }}</p>
+            <a [routerLink]="['/programme', prog.id]" class="btn btn-outline-warning mt-2">📘 Learn More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Boutons de contrôle -->
+    <div class="text-center mt-4">
+      <button
+        class="btn btn-warning me-2"
+        *ngIf="programmesAffiches.length < (staticPrograms.length + programmes.length)"
+    (click)="handleVoirPlus()"
+  >
+        Voir plus
+      </button>
+
+
+      <button
+        class="btn btn-secondary"
+        *ngIf="programmesAffiches.length > 4"
+    (click)="voirMoins()"
+  >
+    🔙 Voir moins
+  </button>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,47 @@
+<div class="container bg-dark text-white p-4 rounded shadow">
+  <h3 class="text-warning mb-4">🧑‍💼 Profil Administrateur</h3>
+
+  <div *ngIf="user; else loading">
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <strong>👤 Nom :</strong> {{ user.name || user.nom || 'Non spécifié' }}
+      </div>
+      <div class="col-md-6">
+        <strong>📧 Email :</strong> {{ user.email }}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <strong>🎭 Rôle :</strong> {{ user.role | titlecase }}
+      </div>
+      <div class="col-md-6">
+        <strong>📅 Membre depuis :</strong> {{ user.created_at | date:'mediumDate' }}
+      </div>
+      <br>
+      <div class="col-md-6">
+        <br>
+        <button class="btn btn-success" routerLink="http://127.0.0.1:8081/">Accéder au MagicFit</button>
+      </div>
+    </div>
+
+    <hr class="bg-light" />
+
+    <!-- 🛠️ Outils Admin -->
+    <div class="card bg-secondary p-4 mt-4">
+      <h4 class="text-white">🛠️ Outils Administrateur</h4>
+      <ul class="mt-2">
+        <li>🔐 Accès rapide aux utilisateurs, programmes, exercices</li>
+        <li>📊 Suivi en temps réel des preformances </li>
+        <li>🧩 Intégration avec un Chatbot IA</li>
+      </ul>
+    </div>
+  </div>
+
+  <ng-template #loading>
+    <p>Chargement du profil...</p>
+  </ng-template>
+</div>
+
+
+
+<!-- Souhaites-tu que je crée le même affichage stylisé pour CoachToolsComponent et ClientToolsComponent aussi ? -->

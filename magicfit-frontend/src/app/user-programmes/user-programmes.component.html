@@ -1,0 +1,12 @@
+<h2>Programmes de l'utilisateur</h2>
+
+<label>Choisir un utilisateur :</label>
+<select [(ngModel)]="selectedUserId" (change)="fetchProgrammes()">
+  <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
+</select>
+
+<ul *ngIf="programmes.length > 0">
+  <li *ngFor="let p of programmes">
+    <strong>{{ p.nom }}</strong> - Coach : {{ p.pivot?.coach_id || 'Non assigné' }}
+  </li>
+</ul>

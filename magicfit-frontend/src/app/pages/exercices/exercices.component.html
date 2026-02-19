@@ -1,0 +1,9 @@
+<div class="col" *ngFor="let exercice of exercices">
+  <div class="card bg-secondary text-white shadow-sm">
+    <div class="card-body">
+      <h5 class="card-title">{{ exercice.nom }}</h5>
+      <p class="card-text">{{ exercice.description }}</p>
+      <a [routerLink]="['/modifier-exercice', exercice.id]" class="btn btn-outline-info btn-sm">✏️ Modifier</a>
+    </div>
+  </div>
+</div>

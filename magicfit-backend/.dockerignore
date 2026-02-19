@@ -1,0 +1,36 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+README.md
+*.md
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Node.js (if any)
+node_modules
+npm-debug.log*
+
+# PHP
+vendor
+#composer.lock
+
+# Laravel specific
+storage/logs/*
+bootstrap/cache/*
+.env*
+
+# Tests
+tests
+phpunit.xml
+
+# IDE
+.vscode
+.idea
+
+# OS
+.DS_Store
+Thumbs.db

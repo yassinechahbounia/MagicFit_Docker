@@ -1,0 +1,58 @@
+<!-- <div class="container mt-4 text-white" *ngIf="coach">
+  <div class="card bg-dark p-4 mb-4">
+    <h3 class="text-info">🏋️‍♂️ Profil Coach</h3>
+    <p><strong>Nom :</strong> {{ coach.name }}</p>
+    <p><strong>Email :</strong> {{ coach.email }}</p>
+    <p><strong>Rôle :</strong> {{ coach.role }}</p>
+  </div>
+
+  <div class="card bg-secondary p-4">
+    <h4>📋 Outils Coach</h4>
+    <ul>
+      <li>📦 Voir les utilisateurs assignés</li>
+      <li>✏️ Modifier mes programmes</li>
+      <li>📅 Suivi des réservations</li>
+      <li>📈 Statistiques de progression</li>
+    </ul>
+  </div>
+</div> -->
+
+<div class="container bg-dark text-white p-4 rounded shadow">
+  <h3 class="text-warning mb-4">🏋️‍♂️ Profil Coach</h3>
+
+  <div *ngIf="user; else loading">
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <strong>👤 Nom :</strong> {{ user.name || user.nom || 'Non spécifié' }}
+      </div>
+      <div class="col-md-6">
+        <strong>📧 Email :</strong> {{ user.email }}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <strong>🎭 Rôle :</strong> {{ user.role | titlecase }}
+      </div>
+      <div class="col-md-6">
+        <strong>📅 Membre depuis :</strong> {{ user.created_at | date:'mediumDate' }}
+      </div>
+    </div>
+
+    <hr class="bg-light" />
+    <p class="fst-italic text-muted">💡 En tant que coach, vous pouvez gérer vos programmes, consulter les suivis des clients, et planifier vos séances.</p>
+
+    <div class="card bg-secondary p-4 mt-4">
+      <h4 class="text-white">📋 Outils Coach</h4>
+      <ul class="mt-2">
+        <li>🧠 Création et modification de programmes</li>
+        <li>📈 Suivi des performances des clients</li>
+        <li>🗓️ Gestion des créneaux de coaching</li>
+      </ul>
+    </div>
+  </div>
+
+  <ng-template #loading>
+    <p>Chargement du profil coach...</p>
+  </ng-template>
+</div>
+

@@ -1,0 +1,8 @@
+.wrapper {
+  max-width: 500px; // rétrécit la largeur
+  margin: 0 auto; // centre horizontalement
+  margin-top: 3rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.75); // semi-transparent fond si nécessaire
+  border-radius: 10px;
+}

@@ -1,0 +1,151 @@
+<div class="dashboard-container text-white">
+  <h2 class="dashboard-title">🏋️‍♂️ Tableau de bord Coach</h2>
+
+  <!-- SECTION 1 : Programmes -->
+<div class="dashboard-card border-yellow">
+      <h4 class="mb-3">📋 Gérer les Programmes</h4>
+    <div class="dashboard-header">
+      <button class="btn-section bg-outine-warning" (click)="afficherProgrammesActions = !afficherProgrammesActions; chargerProgrammes()">
+        Voir les Programmes
+      </button>
+      </div>
+    <div *ngIf="afficherProgrammesActions" class="dashboard-body">
+      <a routerLink="/ajouter-programme" class="btn btn-success mb-3">➕ Ajouter</a>
+
+      <div class="table-responsive">
+        <table class="table table-dark table-striped table-hover align-middle text-nowrap">
+          <thead class="table-warning">
+            <tr>
+              <th>Nom</th>
+              <th>Description</th>
+              <th>Catégorie</th>
+              <th>Exercices Associés</th>
+              <th>Image</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of programmes">
+              <td>{{ p.nom }}</td>
+              <td>{{ p.description }}</td>
+              <td>{{ p.categorie }}</td>
+              <td>
+                <ul class="list-unstyled mb-0">
+                  <li *ngFor="let ex of p.exercices">
+                    <span class="badge bg-secondary">{{ ex.nom }}</span>
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <img
+                  [src]="'assets/images/' + p.image"
+                  class="rounded-circle"
+                  width="50"
+                  height="50"
+                  alt="{{ p.nom }}"
+                />
+              </td>
+              <td>
+                <div class="d-flex flex-column gap-2">
+                  <button (click)="supprimerProgramme(p.id)" class="btn btn-sm btn-danger">Supprimer</button>
+                  <a [routerLink]="['/modifier-programme', p.id]" class="btn btn-sm btn-info">✏️ Modifier</a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 : Utilisateurs -->
+<div class="dashboard-card border-blue">
+  <h4 class="mb-3">👥Gérer les Utilisateurs</h4>
+  <div class="dashboard-header">
+      <button class="btn-section" (click)="afficherUtilisateursActions = !afficherUtilisateursActions; chargerUtilisateurs()">
+        Voir les Utilisateurs
+      </button>
+</div>
+<div *ngIf="afficherUtilisateursActions" class="dashboard-body">    <a routerLink="/ajouter-utilisateur" class="btn btn-success mb-3">➕ Ajouter</a>
+
+    <div class="table-responsive">
+      <table class="table table-dark table-striped table-hover align-middle text-nowrap">
+        <thead class="table-warning">
+          <tr>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Rôle</th>
+            <th>Date de création</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let u of utilisateurs">
+            <td>{{ u.name }}</td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.role }}</td>
+            <td>{{ u.created_at | date: 'shortDate' }}</td>
+            <td>
+              <div class="d-flex flex-column gap-2">
+                <button (click)="supprimerUtilisateur(u.id)" class="btn btn-sm btn-danger">🗑️ Supprimer</button>
+                <a [routerLink]="['/modifier-utilisateur', u.id]" class="btn btn-sm btn-info">✏️ Modifier</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+ <!-- SECTION 3 : Exercices -->
+<div class="dashboard-card border-green">
+  <h4 class="mb-3">🏋️‍♂️ Gérer les Exercices</h4>
+
+  <div class="dashboard-header">
+      <button class="btn-section" (click)="afficherExercicesActions = !afficherExercicesActions; chargerExercices()">
+        Voir les Exercices
+      </button>
+</div>
+  <div *ngIf="afficherExercicesActions" class="mt-4">
+    <a routerLink="/ajouter-exercice" class="btn btn-success mb-3">➕ Ajouter</a>
+
+    <div class="table-responsive">
+      <table class="table table-dark table-striped table-hover align-middle text-nowrap">
+        <thead class="table-warning">
+          <tr>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Catégorie</th>
+            <th>Image</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ex of exercices">
+            <td>{{ ex.nom }}</td>
+            <td>{{ ex.description }}</td>
+            <td>{{ ex.categorie }}</td>
+            <td>
+              <img
+                [src]="'assets/images/' + ex.image"
+                class="rounded-circle"
+                width="50"
+                height="50"
+                alt="{{ ex.nom }}"
+              />
+            </td>
+            <td>
+              <div class="d-flex flex-column gap-2">
+                <button (click)="supprimerExercice(ex.id)" class="btn btn-sm btn-danger">🗑️ Supprimer</button>
+                <a [routerLink]="['/modifier-exercice', ex.id]" class="btn btn-sm btn-info">✏️ Modifier</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</div>
