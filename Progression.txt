@@ -1,0 +1,117 @@
+n'ajoute pas des choses que n'a pas demandé comme ansible, je peux t'aider pour me donner des questions et me répondre pour faire une architecture sur ce que je veux
+
+corrige ce code et adapter le avec ce projet avec aussi les choses demandés sur "_Projet de Fin de Formation.docx".
+
+title MagicFit – AWS Cloud & DevOps Architecture (PFE)
+
+Application Layer
+Application [icon: layers] {
+  Frontend [icon: monitor, label: "Angular Frontend"]
+  Backend [icon: server, label: "Laravel Backend"]
+  MagicMirror [icon: monitor, label: "MagicMirror Interface"]
+}
+
+Containerization
+Docker Images [icon: docker] {
+  Frontend Image [icon: docker, label: "Frontend"]
+  Backend Image [icon: docker, label: "Backend"]
+  MagicMirror Image [icon: docker, label: "MagicMirror"]
+  Worker Image [icon: docker, label: "Worker"]
+}
+
+Registry
+ECR [icon: aws-ecr, label: "Container Registry"]
+
+Infrastructure as Code
+Terraform [icon: terraform]
+
+CI/CD Pipeline
+CI CD [icon: github, color: purple] {
+  Source Code [icon: github]
+  Build Test [icon: git-commit, label: "Build/Test"]
+  Deploy [icon: git-merge, label: "Deploy"]
+  SonarQube [icon: shield, label: "Code Quality"]
+}
+
+AWS Infrastructure
+AWS Cloud [icon: aws] {
+  VPC [icon: aws-vpc] {
+    Public Subnet [icon: aws-subnet, label: "Public"]
+    Private Subnet [icon: aws-subnet, label: "Private"]
+    NAT Gateway [icon: aws-nat-gateway]
+    Internet Gateway [icon: aws-internet-gateway]
+  }
+
+  EKS Cluster [icon: aws-eks, color: blue] {
+    Node Group [icon: aws-ec2-auto-scaling]
+    Frontend Pod [icon: k8s-pod, label: "Angular"]
+    Backend Pod [icon: k8s-pod, label: "Laravel"]
+    MagicMirror Pod [icon: k8s-pod, label: "MagicMirror"]
+    Worker Pod [icon: k8s-pod, label: "Worker"]
+    Ingress Controller [icon: k8s-ingress, label: "ALB Ingress"]
+    HPA [icon: k8s-hpa, label: "Auto Scaling"]
+  }
+
+  Data Layer [icon: database, color: green] {
+    RDS MySQL [icon: aws-rds, label: "MySQL"]
+    S3 Storage [icon: aws-s3, label: "Files & Backups"]
+    SQS Queue [icon: aws-sqs, label: "Async Queue"]
+  }
+
+  Security [icon: shield, color: red] {
+    IAM Roles [icon: aws-iam, label: "IAM"]
+    Secrets Manager [icon: aws-secrets-manager, label: "Secrets"]
+    WAF [icon: aws-waf, label: "WAF"]
+    Security Groups [icon: lock, label: "Security Groups"]
+  }
+
+  Edge Services [icon: globe] {
+    Route53 [icon: aws-route53, label: "DNS"]
+    CloudFront [icon: aws-cloudfront, label: "CDN"]
+  }
+}
+
+Monitoring
+Monitoring [icon: activity, color: orange] {
+  CloudWatch [icon: aws-cloudwatch]
+  Prometheus [icon: prometheus]
+  Grafana [icon: grafana]
+  SNS Alerts [icon: aws-sns, label: "Alerts"]
+}
+
+Connections - CI/CD Flow
+Source Code > Build Test
+Build Test > Docker Images
+Build Test > SonarQube
+Docker Images > ECR
+Deploy > EKS Cluster
+Terraform > AWS Cloud
+
+// Traffic Flow
+Route53 > CloudFront
+CloudFront > WAF
+WAF > Ingress Controller
+Ingress Controller > Frontend Pod
+Ingress Controller > Backend Pod
+Ingress Controller > MagicMirror Pod
+
+// Data Flow
+Backend Pod <> RDS MySQL
+Backend Pod > S3 Storage
+Backend Pod > SQS Queue: send jobs
+Worker Pod <-- SQS Queue: process jobs
+Worker Pod > RDS MySQL
+
+// Container Registry
+EKS Cluster > ECR: pull images
+
+// Monitoring Flow
+EKS Cluster --> CloudWatch: logs & metrics
+EKS Cluster --> Prometheus: metrics
+Prometheus > Grafana
+CloudWatch > SNS Alerts
+
+// Security
+Secrets Manager --> EKS Cluster: inject secrets
+IAM Roles > EKS Cluster
+Security Groups > VPC

@@ -1,0 +1,60 @@
+***** A partir des commade ***********
+- minikube start
+- Sur GitBash : 
+	* echo $(minikube docker-env)
+	* eval $DOCKER_HOST
+	* echo $DOCKER_HOST
+	- (build l'image si n'existe pas : docker build . -t app-node-test:v1)
+	- kubectl create deployment node-app --image node-app-test:v1
+	* kubectl create deployment magicfit_docker --image magicfit_docker
+	* kubectl get deployments (pour voir la liste des pods déployer / de deployment)
+	* kubectl get pods (pour consulter les pods)
+	* (pour accéder à ce servive / Exposer le port 8080 de l'application pour un acces au pod de l	'extérieur : 
+	 (kubectl expose deployment app-node --type=NodePort --port=8080)
+	kubectl expose deployment magicfit_docker --type=NodePort --port=8080
+	*kubectl describe service node-app             (node-app /magicfit_docker : c'est le nom de svc)
+	* pour avoir l'adresse pour accéder à notre service : 
+		minikube service nom_service=>   minikube service magicfit_docker   ou   node-app
+
+	* si vous avez deployer un contenur et vous voulez de faire un test local à partir de noeud ou 	existe le conteneur : 
+		kubectl get pods 
+		winpty kubectl exec -ti nom_pod bash (qui est afficher sur la cmd kubectl get pods)
+		curl http://localhost:8080
+- pour supprimer un service : 		
+	kubectl service nom_service (node-app)
+- pour supprimer un  pod : 
+	kubectl delete pod nom_pod 
+- Pour Scale my pods : 
+ 	kubectl scale --replicas=3 deployment deployment_name
+
+- il faut chercher comment passer au mode de production 
+
+
+
+***** A partir de fichier YAML ***********
+Deployment.yml : 
+apiVersion: apps/v1
+kind : Deployment 
+metadata:
+   name : ngnix
+spec:
+   replicas: 3
+   selector: 
+	matchLabels: 
+	    app:ngnix
+   template:
+  	metadata:
+	    labels:
+		app:ngnix
+	spec: 
+	  containers: 
+	  - name: ngnix
+	    image:ngnix:1.7.9
+	    ports: 
+	    -containerPort:80
+
+$kubectl create -f   nom_de_fichier.yaml
+
+Comment deployer un container dans un pod ?
+CTM Admin ??
+

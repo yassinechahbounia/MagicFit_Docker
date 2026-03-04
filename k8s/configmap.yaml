@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: magicfit-config
+  namespace: magicfit
+data:
+  # Laravel
+  APP_NAME: "MagicFit"
+  APP_ENV: "dev"
+  APP_DEBUG: "true"
+
+  # Sur EKS: ton backend est joignable via son Service K8s
+  APP_URL: "http://magicfit-backend"
+
+  # DB (non sensible)
+  DB_CONNECTION: "mysql"
+  DB_HOST: "magicfit-db.magicfit.svc.cluster.local"
+  DB_PORT: "3306"
+  DB_DATABASE: "magicfit_mirror"
+  DB_USERNAME: "magicfit_user"
+
+  # Pour le moment (Partie 7 plus tard => SQS)
+  QUEUE_CONNECTION: "sync"

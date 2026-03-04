@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: magicfit-backend
+  namespace: magicfit
+spec:
+  type: ClusterIP
+  selector:
+    app: magicfit-backend
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: magicfit-backend
+  namespace: magicfit
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: magicfit-backend
+  template:
+    metadata:
+      labels:
+        app: magicfit-backend
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: nginx-conf
+          mountPath: /etc/nginx/conf.d/default.conf
+          subPath: default.conf
+
+      - name: php-fpm
+        image: 273220735056.dkr.ecr.us-east-1.amazonaws.com/magicfit-backend:latest
+        ports:
+        - containerPort: 9000
+        envFrom:
+        - configMapRef:
+            name: magicfit-config
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: magicfit-secrets
+              key: DB_PASSWORD
+        - name: APP_KEY
+          valueFrom:
+            secretKeyRef:
+              name: magicfit-secrets
+              key: APP_KEY
+
+      volumes:
+      - name: nginx-conf
+        configMap:
+          name: magicfit-backend-nginx-conf

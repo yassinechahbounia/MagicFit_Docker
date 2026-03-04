@@ -1,0 +1,69 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: magicfit-magicmirror
+  namespace: magicfit
+spec:
+  type: ClusterIP
+  selector:
+    app: magicfit-magicmirror
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: magicfit-magicmirror
+  namespace: magicfit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: magicfit-magicmirror
+  template:
+    metadata:
+      labels:
+        app: magicfit-magicmirror
+    spec:
+      containers:
+      - name: magicmirror
+        image: 273220735056.dkr.ecr.us-east-1.amazonaws.com/magicfit-magicmirror:latest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: magicfit-magicmirror-proxy
+  namespace: magicfit
+spec:
+  type: LoadBalancer
+  selector:
+    app: magicfit-magicmirror-proxy
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: magicfit-magicmirror-proxy
+  namespace: magicfit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: magicfit-magicmirror-proxy
+  template:
+    metadata:
+      labels:
+        app: magicfit-magicmirror-proxy
+    spec:
+      containers:
+      - name: nginx
+        image: 273220735056.dkr.ecr.us-east-1.amazonaws.com/magicfit-magicmirror-proxy:latest
+        ports:
+        - containerPort: 80

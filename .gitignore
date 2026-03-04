@@ -221,3 +221,7 @@ docker-compose.yml
 *.tfstate
 .terraform/
 terraform/
+
+k8s\_old\secret.yaml
+./architecture.png
+./_Projet de Fin de Formation.docx
