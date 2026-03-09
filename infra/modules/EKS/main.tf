@@ -75,7 +75,8 @@ resource "aws_security_group" "eks_cluster" {
 resource "aws_eks_cluster" "this" {
   name     = var.cluster_name
   role_arn = aws_iam_role.eks_cluster.arn
-
+  bootstrap_self_managed_addons = false  # ← AJOUTE CETTE LIGNE
+  
   vpc_config {
     # Bonnes pratiques: nodes dans subnets privés (c'est ce que tu passes depuis env/dev)
     subnet_ids         = var.subnet_ids

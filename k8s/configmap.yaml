@@ -9,6 +9,10 @@ data:
   APP_ENV: "dev"
   APP_DEBUG: "true"
 
+  # Logging (stderr = capturable par K8s / CloudWatch)
+  LOG_CHANNEL: "stderr"
+  LOG_LEVEL: "info"
+
   # Sur EKS: ton backend est joignable via son Service K8s
   APP_URL: "http://magicfit-backend"
 
@@ -19,5 +23,8 @@ data:
   DB_DATABASE: "magicfit_mirror"
   DB_USERNAME: "magicfit_user"
 
-  # Pour le moment (Partie 7 plus tard => SQS)
-  QUEUE_CONNECTION: "sync"
+  # Queue System (AWS SQS)
+  QUEUE_CONNECTION: "sqs"
+  SQS_QUEUE: "magicfit-queue"
+  # SQS_PREFIX sera injecté nativement via variables Terraform ou depuis le POD env
+  AWS_DEFAULT_REGION: "us-east-1"

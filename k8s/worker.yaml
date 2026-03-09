@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: magicfit-worker
+  namespace: magicfit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: magicfit-worker
+  template:
+    metadata:
+      labels:
+        app: magicfit-worker
+    spec:
+      containers:
+      - name: php-worker
+        image: 273220735056.dkr.ecr.us-east-1.amazonaws.com/magicfit-backend:latest
+        command: ["php", "artisan", "queue:work", "--queue=magicfit-queue", "--sleep=3", "--tries=3"]
+        envFrom:
+        - configMapRef:
+            name: magicfit-config
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: magicfit-secrets
+              key: DB_PASSWORD
+        - name: APP_KEY
+          valueFrom:
+            secretKeyRef:
+              name: magicfit-secrets
+              key: APP_KEY

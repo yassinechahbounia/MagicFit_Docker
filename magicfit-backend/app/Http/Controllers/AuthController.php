@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -30,6 +31,8 @@ class AuthController extends Controller
 
         $token = $user->createToken('token')->plainTextToken;
 
+        Log::info('Nouvel utilisateur inscrit', ['user_id' => $user->id, 'email' => $user->email, 'role' => $user->role]);
+
         return response()->json([
             'message' => 'Inscription réussie',
             'token' => $token,
@@ -51,6 +54,7 @@ class AuthController extends Controller
         ]);
 
         if (!Auth::attempt($request->only('email', 'password'))) {
+            Log::warning('Tentative de connexion échouée', ['email' => $request->email, 'ip' => $request->ip()]);
             throw ValidationException::withMessages([
                 'email' => ['Les informations de connexion sont incorrectes.'],
             ]);
@@ -58,6 +62,8 @@ class AuthController extends Controller
 
         $user = Auth::user();
         $token = $user->createToken('token')->plainTextToken;
+
+        Log::info('Connexion réussie', ['user_id' => $user->id, 'email' => $user->email]);
 
         return response()->json([
             'message' => 'Connexion réussie',
@@ -69,6 +75,7 @@ class AuthController extends Controller
     // 🔓 Déconnexion
     public function logout(Request $request)
     {
+        Log::info('Déconnexion', ['user_id' => $request->user()->id]);
         $request->user()->tokens()->delete();
 
         return response()->json(['message' => 'Déconnexion réussie']);

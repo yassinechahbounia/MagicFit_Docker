@@ -3,7 +3,7 @@ FROM composer:2.7 AS build
 WORKDIR /app
 
 # Copier uniquement les fichiers nécessaires pour installer les dépendances
-COPY composer.json composer.lock ./
+COPY composer.json ./
 
 # Installer les dépendances sans les packages de dev
 RUN composer install \
@@ -13,7 +13,6 @@ RUN composer install \
     --no-scripts \
     --no-progress \
     --optimize-autoloader
-# Copier le reste du code source
 COPY . .
 
 # Optimiser l'autoloader

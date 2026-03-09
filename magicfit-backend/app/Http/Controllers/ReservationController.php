@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 use App\Notifications\ReservationConfirmee;
 use Illuminate\Support\Facades\Notification;
@@ -52,16 +53,12 @@ class ReservationController extends Controller
 
         $reservation = Reservation::create($validated);
 
-        Notification::route('mail', $reservation->email)
-            ->notify(new ReservationConfirmee($reservation));
+        // Dispatch job in queue
+        \App\Jobs\ProcessReservationNotification::dispatch($reservation);
 
-          // Envoi mail de confirmation
-    $user = new TempNotifiableUser();
-    $user->name = $reservation->nom;
-    $user->email = $reservation->email;
-    $user->notify(new ReservationConfirmee($reservation));
+        Log::info('Réservation créée', ['reservation_id' => $reservation->id, 'nom' => $reservation->nom, 'type' => $reservation->type]);
 
-    return response()->json(['message' => 'Réservation créée avec succès'], 201);
+    return response()->json(['message' => 'Réservation créée avec succès (asynchrone)'], 201);
     }
 
     // 🔄 Modifier une réservation
@@ -78,6 +75,9 @@ class ReservationController extends Controller
         ]);
 
         $reservation->update($validated);
+
+        Log::info('Réservation modifiée', ['reservation_id' => $reservation->id]);
+
         return response()->json(['message' => 'Réservation modifiée avec succès']);
     }
 
@@ -85,6 +85,9 @@ class ReservationController extends Controller
     public function destroy($id)
     {
         $reservation = Reservation::findOrFail($id);
+
+        Log::info('Réservation supprimée', ['reservation_id' => $reservation->id]);
+
         $reservation->delete();
 
         return response()->json(['message' => 'Réservation supprimée']);
