@@ -1,0 +1,199 @@
+﻿{
+    "AutoScalingGroups": [
+        {
+            "AutoScalingGroupName": "eks-default-e0ce6d3d-3f16-df50-17c6-e8317c7abcec",
+            "AutoScalingGroupARN": "arn:aws:autoscaling:us-east-1:158975163788:autoScalingGroup:e5a0ad49-b266-4704-adc8-f8a6d9397dcc:autoScalingGroupName/eks-default-e0ce6d3d-3f16-df50-17c6-e8317c7abcec",
+            "MixedInstancesPolicy": {
+                "LaunchTemplate": {
+                    "LaunchTemplateSpecification": {
+                        "LaunchTemplateId": "lt-05656d7e75ddd8c30",
+                        "LaunchTemplateName": "eks-e0ce6d3d-3f16-df50-17c6-e8317c7abcec",
+                        "Version": "1"
+                    },
+                    "Overrides": [
+                        {
+                            "InstanceType": "t3.medium"
+                        }
+                    ]
+                },
+                "InstancesDistribution": {
+                    "OnDemandAllocationStrategy": "prioritized",
+                    "OnDemandBaseCapacity": 0,
+                    "OnDemandPercentageAboveBaseCapacity": 100,
+                    "SpotAllocationStrategy": "lowest-price",
+                    "SpotInstancePools": 2
+                }
+            },
+            "MinSize": 1,
+            "MaxSize": 3,
+            "DesiredCapacity": 2,
+            "DefaultCooldown": 300,
+            "AvailabilityZones": [
+                "us-east-1a",
+                "us-east-1b"
+            ],
+            "LoadBalancerNames": [],
+            "TargetGroupARNs": [],
+            "HealthCheckType": "EC2",
+            "HealthCheckGracePeriod": 15,
+            "Instances": [],
+            "CreatedTime": "2026-03-11T01:21:02.330000+00:00",
+            "SuspendedProcesses": [],
+            "VPCZoneIdentifier": "subnet-0472bd45197b4ec00,subnet-029e54b09ee9be6bc",
+            "EnabledMetrics": [
+                {
+                    "Metric": "WarmPoolDesiredCapacity",
+                    "Granularity": "1Minute"
+                },
+                {
+                    "Metric": "GroupAndWarmPoolTotalCapacity",
+                    "Granularity": "1Minute"
+                },
+                {
+                    "Metric": "GroupMinSize",
+                    "Granularity": "1Minute"
+                },
+                {
+                    "Metric": "GroupTerminatingRetainedCapacity",
+                    "Granularity": "1Minute"
+                },
+                {
+                    "Metric": "GroupTerminatingCapacity",
+                    "Granularity": "1Minute"
+                },
+                {
+                    "Metric": "GroupAndWarmPoolDesiredCapacity",
+                    "Granularity": "1Minute"
+                },
+                {
+                    "Metric": "GroupStandbyInstances",
+                    "Granularity": "1Minute"
+                },
+                {
+                    "Metric": "GroupTerminatingInstances",
+                    "Granularity": "1Minute"
+                },
+                {
+                    "Metric": "WarmPoolMinSize",
+                    "Granularity": "1Minute"
+                },
+                {
+                    "Metric": "GroupTerminatingRetainedInstances",
+                    "Granularity": "1Minute"
+                },
+                {
+                    "Metric": "GroupPendingCapacity",
+                    "Granularity": "1Minute"
+                },
+                {
+                    "Metric": "GroupStandbyCapacity",
+                    "Granularity": "1Minute"
+                },
+                {
+                    "Metric": "WarmPoolTerminatingRetainedCapacity",
+                    "Granularity": "1Minute"
+                },
+                {
+                    "Metric": "WarmPoolPendingCapacity",
+                    "Granularity": "1Minute"
+                },
+                {
+                    "Metric": "GroupDesiredCapacity",
+                    "Granularity": "1Minute"
+                },
+                {
+                    "Metric": "GroupPendingInstances",
+                    "Granularity": "1Minute"
+                },
+                {
+                    "Metric": "GroupInServiceCapacity",
+                    "Granularity": "1Minute"
+                },
+                {
+                    "Metric": "GroupTotalCapacity",
+                    "Granularity": "1Minute"
+                },
+                {
+                    "Metric": "WarmPoolPendingRetainedCapacity",
+                    "Granularity": "1Minute"
+                },
+                {
+                    "Metric": "GroupTotalInstances",
+                    "Granularity": "1Minute"
+                },
+                {
+                    "Metric": "GroupInServiceInstances",
+                    "Granularity": "1Minute"
+                },
+                {
+                    "Metric": "GroupMaxSize",
+                    "Granularity": "1Minute"
+                },
+                {
+                    "Metric": "WarmPoolTerminatingCapacity",
+                    "Granularity": "1Minute"
+                },
+                {
+                    "Metric": "WarmPoolWarmedCapacity",
+                    "Granularity": "1Minute"
+                },
+                {
+                    "Metric": "WarmPoolTotalCapacity",
+                    "Granularity": "1Minute"
+                }
+            ],
+            "Tags": [
+                {
+                    "ResourceId": "eks-default-e0ce6d3d-3f16-df50-17c6-e8317c7abcec",
+                    "ResourceType": "auto-scaling-group",
+                    "Key": "eks:cluster-name",
+                    "Value": "magicfit-eks-dev",
+                    "PropagateAtLaunch": true
+                },
+                {
+                    "ResourceId": "eks-default-e0ce6d3d-3f16-df50-17c6-e8317c7abcec",
+                    "ResourceType": "auto-scaling-group",
+                    "Key": "eks:nodegroup-name",
+                    "Value": "default",
+                    "PropagateAtLaunch": true
+                },
+                {
+                    "ResourceId": "eks-default-e0ce6d3d-3f16-df50-17c6-e8317c7abcec",
+                    "ResourceType": "auto-scaling-group",
+                    "Key": "k8s.io/cluster-autoscaler/enabled",
+                    "Value": "true",
+                    "PropagateAtLaunch": true
+                },
+                {
+                    "ResourceId": "eks-default-e0ce6d3d-3f16-df50-17c6-e8317c7abcec",
+                    "ResourceType": "auto-scaling-group",
+                    "Key": "k8s.io/cluster-autoscaler/magicfit-eks-dev",
+                    "Value": "owned",
+                    "PropagateAtLaunch": true
+                },
+                {
+                    "ResourceId": "eks-default-e0ce6d3d-3f16-df50-17c6-e8317c7abcec",
+                    "ResourceType": "auto-scaling-group",
+                    "Key": "kubernetes.io/cluster/magicfit-eks-dev",
+                    "Value": "owned",
+                    "PropagateAtLaunch": true
+                }
+            ],
+            "TerminationPolicies": [
+                "AllocationStrategy",
+                "OldestLaunchTemplate",
+                "OldestInstance"
+            ],
+            "NewInstancesProtectedFromScaleIn": false,
+            "ServiceLinkedRoleARN": "arn:aws:iam::158975163788:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling",
+            "CapacityRebalance": true,
+            "TrafficSources": [],
+            "AvailabilityZoneDistribution": {
+                "CapacityDistributionStrategy": "balanced-best-effort"
+            },
+            "CapacityReservationSpecification": {
+                "CapacityReservationPreference": "default"
+            }
+        }
+    ]
+}

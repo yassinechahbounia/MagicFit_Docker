@@ -29,9 +29,16 @@ spec:
     spec:
       containers:
       - name: magicmirror
-        image: 273220735056.dkr.ecr.us-east-1.amazonaws.com/magicfit-magicmirror:latest
+        image: 158975163788.dkr.ecr.us-east-1.amazonaws.com/magicfit-magicmirror:latest
         ports:
         - containerPort: 8080
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
 ---
 apiVersion: v1
 kind: Service
@@ -64,6 +71,13 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: 273220735056.dkr.ecr.us-east-1.amazonaws.com/magicfit-magicmirror-proxy:latest
+        image: 158975163788.dkr.ecr.us-east-1.amazonaws.com/magicfit-magicmirror-proxy:latest
         ports:
         - containerPort: 80
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "50m"
+          limits:
+            memory: "64Mi"
+            cpu: "100m"

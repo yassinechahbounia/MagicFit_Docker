@@ -4,11 +4,13 @@ terraform {
       source  = "hashicorp/aws"
       version = ">= 5.0"
     }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = ">= 2.0"
+    }
   }
   required_version = ">= 1.0"
 
-  # Backend distant S3 + DynamoDB pour le state locking
-  # Pré-requis : exécuter infra/backend-bootstrap/ d'abord
   backend "s3" {
     bucket         = "magicfit-terraform-state"
     key            = "infra/terraform.tfstate"
@@ -30,12 +32,22 @@ provider "aws" {
   }
 }
 
+provider "kubernetes" {
+  host                   = module.eks.cluster_endpoint
+  cluster_ca_certificate = base64decode(module.eks.cluster_ca_certificate)
+  exec {
+    api_version = "client.authentication.k8s.io/v1beta1"
+    args        = ["eks", "get-token", "--cluster-name", "magicfit-eks-dev"]
+    command     = "aws"
+  }
+}
+
 module "vpc" {
   source   = "./modules/VPC"
   name     = "magicfit"
   vpc_cidr = "10.0.0.0/16"
   az_count = 2
-  vpc_id   = "" # Pass an empty string, will be ignored in main.tf, but required by variables.tf
+  vpc_id   = ""
 }
 
 module "eks" {
@@ -43,7 +55,7 @@ module "eks" {
   cluster_name       = "magicfit-eks-dev"
   vpc_id             = module.vpc.vpc_id
   subnet_ids         = module.vpc.private_subnet_ids
-  node_instance_type = "t3.medium"
+  node_instance_type = "t3.micro"
   node_desired_size  = 2
   node_min_size      = 1
   node_max_size      = 3
@@ -59,4 +71,19 @@ module "cloudwatch" {
   source             = "./modules/CloudWatch"
   cluster_name       = module.eks.cluster_name
   eks_node_role_name = module.eks.node_role_name
+}
+
+module "ecr" {
+  source               = "./modules/ECR"
+  repos                = ["magicfit-backend", "magicfit-frontend", "magicfit-magicmirror", "magicfit-magicmirror-proxy"]
+  image_tag_mutability = "MUTABLE"
+  expire_untagged_days = 3
+}
+
+module "gha" {
+  source = "./modules/GHA"
+}
+
+output "gha_role_arn" {
+  value = module.gha.role_arn
 }

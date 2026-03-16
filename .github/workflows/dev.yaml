@@ -9,9 +9,9 @@ permissions:
   contents: read
 
 env:
-  AWS_REGION: ${{ vars.AWS_REGION }}
-  AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
-  EKS_CLUSTER_NAME: ${{ vars.EKS_CLUSTER_NAME }}
+  AWS_REGION: us-east-1
+  AWS_ACCOUNT_ID: "158975163788"
+  EKS_CLUSTER_NAME: magicfit-eks-dev
 
 
 jobs:
@@ -71,41 +71,43 @@ jobs:
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          role-to-assume: arn:aws:iam::158975163788:role/magicfit-gha-deploy
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Login to ECR
-        run: |
-          aws ecr get-login-password --region $AWS_REGION \
-          | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+        uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build & push backend
         run: |
           TAG=${{ steps.meta.outputs.image_tag }}
-          docker build -t magicfit-backend:$TAG ./magicfit-backend
-          docker tag magicfit-backend:$TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-backend:$TAG
+          docker build -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-backend:$TAG ./magicfit-backend
+          docker tag $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-backend:$TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-backend:latest
           docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-backend:$TAG
+          docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-backend:latest
 
       - name: Build & push frontend
         run: |
           TAG=${{ steps.meta.outputs.image_tag }}
-          docker build -t magicfit-frontend:$TAG ./magicfit-frontend
-          docker tag magicfit-frontend:$TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-frontend:$TAG
+          docker build -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-frontend:$TAG ./magicfit-frontend
+          docker tag $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-frontend:$TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-frontend:latest
           docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-frontend:$TAG
+          docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-frontend:latest
 
       - name: Build & push magicmirror
         run: |
           TAG=${{ steps.meta.outputs.image_tag }}
-          docker build -t magicfit-magicmirror:$TAG ./MagicMirror
-          docker tag magicfit-magicmirror:$TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-magicmirror:$TAG
+          docker build -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-magicmirror:$TAG ./MagicMirror
+          docker tag $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-magicmirror:$TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-magicmirror:latest
           docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-magicmirror:$TAG
+          docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-magicmirror:latest
 
       - name: Build & push magicmirror-proxy
         run: |
           TAG=${{ steps.meta.outputs.image_tag }}
-          docker build -t magicfit-magicmirror-proxy:$TAG -f ./Dockerfile.magicmirror-proxy .
-          docker tag magicfit-magicmirror-proxy:$TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-magicmirror-proxy:$TAG
+          docker build -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-magicmirror-proxy:$TAG -f ./Dockerfile.magicmirror-proxy .
+          docker tag $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-magicmirror-proxy:$TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-magicmirror-proxy:latest
           docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-magicmirror-proxy:$TAG
+          docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-magicmirror-proxy:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -116,7 +118,7 @@ jobs:
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::273220735056:role/magicfit-gha-deploy
+          role-to-assume: arn:aws:iam::158975163788:role/magicfit-gha-deploy
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Install kubectl
@@ -125,31 +127,29 @@ jobs:
       - name: kubeconfig
         run: aws eks update-kubeconfig --region $AWS_REGION --name $EKS_CLUSTER_NAME
 
-      - name: Deploy (inject image tags)
+      - name: Deploy (apply manifests)
+        run: |
+          kubectl apply -f k8s/namespace.yaml
+          kubectl apply -f k8s/configmap.yaml -n magicfit
+          kubectl apply -f k8s/db.yaml -n magicfit
+          kubectl apply -f k8s/backend-ngnix-config.yaml -n magicfit
+          kubectl apply -f k8s/backend.yaml -n magicfit
+          kubectl apply -f k8s/backend-hpa.yaml -n magicfit
+          kubectl apply -f k8s/frontend.yaml -n magicfit
+          kubectl apply -f k8s/magicmirror.yaml -n magicfit
+
+      - name: Update images to latest commit tag
         run: |
           TAG=${{ needs.build_push.outputs.image_tag }}
+          NS=magicfit
+          REG=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+          
+          kubectl set image deploy/magicfit-backend php-fpm=$REG/magicfit-backend:$TAG -n $NS
+          kubectl set image deploy/magicfit-frontend frontend=$REG/magicfit-frontend:$TAG -n $NS
+          kubectl set image deploy/magicfit-magicmirror magicmirror=$REG/magicfit-magicmirror:$TAG -n $NS
+          kubectl set image deploy/magicfit-magicmirror-proxy nginx=$REG/magicfit-magicmirror-proxy:$TAG -n $NS
 
-          kubectl apply -f k8s/00-namespace.yaml
-
-          # Applique config & secrets & DB
-          kubectl apply -f k8s/01-configmap.yaml -n magicfit
-          ###kubectl apply -f k8s/02-secret.yaml -n magicfit
-          kubectl apply -f k8s/10-db.yaml -n magicfit
-          kubectl apply -f k8s/20-backend-nginx-config.yaml -n magicfit
-
-          # Apply workloads
-          kubectl apply -f k8s/21-backend.yaml -n magicfit
-          kubectl apply -f k8s/22-backend-hpa.yaml -n magicfit
-          kubectl apply -f k8s/30-frontend.yaml -n magicfit
-          kubectl apply -f k8s/40-magicmirror.yaml -n magicfit
-          kubectl apply -f k8s/41-magicmirror-proxy.yaml -n magicfit
-
-          # Patch images to the SHA tag (works with IMMUTABLE)
-          kubectl set image deploy/magicfit-backend php-fpm=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-backend:$TAG -n magicfit
-          kubectl set image deploy/magicfit-frontend frontend=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-frontend:$TAG -n magicfit
-          kubectl set image deploy/magicfit-magicmirror magicmirror=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-magicmirror:$TAG -n magicfit
-          kubectl set image deploy/magicfit-magicmirror-proxy nginx=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/magicfit-magicmirror-proxy:$TAG -n magicfit
-
-          # Wait rollouts
+      - name: Wait for rollouts
+        run: |
           kubectl rollout status deploy/magicfit-backend -n magicfit
           kubectl rollout status deploy/magicfit-frontend -n magicfit

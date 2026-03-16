@@ -4,7 +4,7 @@ metadata:
   name: magicfit-db
   namespace: magicfit
 spec:
-  type: ClusterIP  # interne au cluster uniquement
+  type: ClusterIP
   selector:
     app: magicfit-db
   ports:
@@ -34,7 +34,6 @@ spec:
         ports:
         - containerPort: 3306
         env:
-        # MariaDB official image attend MARIADB_* (pas MYSQL_*) dans Kubernetes
         - name: MARIADB_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -55,6 +54,13 @@ spec:
             secretKeyRef:
               name: magicfit-secrets
               key: DB_PASSWORD
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "400Mi"
+            cpu: "300m"
         volumeMounts:
         - name: datadir
           mountPath: /var/lib/mysql

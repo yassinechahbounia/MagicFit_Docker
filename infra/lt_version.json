@@ -1,0 +1,46 @@
+﻿{
+    "LaunchTemplateVersions": [
+        {
+            "LaunchTemplateId": "lt-05656d7e75ddd8c30",
+            "LaunchTemplateName": "eks-e0ce6d3d-3f16-df50-17c6-e8317c7abcec",
+            "VersionNumber": 1,
+            "CreateTime": "2026-03-11T01:20:19+00:00",
+            "CreatedBy": "arn:aws:sts::158975163788:assumed-role/AWSServiceRoleForAmazonEKSNodegroup/EKS",
+            "DefaultVersion": true,
+            "LaunchTemplateData": {
+                "IamInstanceProfile": {
+                    "Name": "eks-e0ce6d3d-3f16-df50-17c6-e8317c7abcec"
+                },
+                "BlockDeviceMappings": [
+                    {
+                        "DeviceName": "/dev/xvda",
+                        "Ebs": {
+                            "DeleteOnTermination": true,
+                            "VolumeSize": 20,
+                            "VolumeType": "gp3"
+                        }
+                    }
+                ],
+                "NetworkInterfaces": [
+                    {
+                        "DeviceIndex": 0,
+                        "Groups": [
+                            "sg-0a2e34d98759e601b"
+                        ]
+                    }
+                ],
+                "ImageId": "ami-017049ddc19bc4ec6",
+                "InstanceType": "t3.medium",
+                "UserData": "TUlNRS1WZXJzaW9uOiAxLjAKQ29udGVudC1UeXBlOiBtdWx0aXBhcnQvbWl4ZWQ7IGJvdW5kYXJ5PSIvLyIKCi0tLy8KQ29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi9ub2RlLmVrcy5hd3MKCi0tLQphcGlWZXJzaW9uOiBub2RlLmVrcy5hd3MvdjFhbHBoYTEKa2luZDogTm9kZUNvbmZpZwpzcGVjOgogIGNsdXN0ZXI6CiAgICBhcGlTZXJ2ZXJFbmRwb2ludDogaHR0cHM6Ly8zMzBCRTlDQ0E3NUU1MUJDRDg4QTUxOTU5QzhDN0ExMS5ncjcudXMtZWFzdC0xLmVrcy5hbWF6b25hd3MuY29tCiAgICBjZXJ0aWZpY2F0ZUF1dGhvcml0eTogTFMwdExTMUNSVWRKVGlCRFJWSlVTVVpKUTBGVVJTMHRMUzB0Q2sxSlNVUkNWRU5EUVdVeVowRjNTVUpCWjBsSlNGY3lNREp4YmxRMUswVjNSRkZaU2t0dldrbG9kbU5PUVZGRlRFSlJRWGRHVkVWVVRVSkZSMEV4VlVVS1FYaE5TMkV6Vm1sYVdFcDFXbGhTYkdONlFXVkdkekI1VG1wQmVrMVVSWGROVkVWNVRVUldZVVozTUhwT2FrRjZUVVJuZDAxVVJUTk5SRlpoVFVKVmVBcEZla0ZTUW1kT1ZrSkJUVlJEYlhReFdXMVdlV0p0VmpCYVdFMTNaMmRGYVUxQk1FZERVM0ZIVTBsaU0wUlJSVUpCVVZWQlFUUkpRa1IzUVhkblowVkxDa0Z2U1VKQlVVUnVPR1E1Y2xWNVVXWmhLMHBVZDI5QlpFaFVhRFUwVFhCbloyeE5jVzVSUTBsMlIyUTRhV3c0ZHpocGNXdFJja2x6YkcxdVVXMXBVVzhLU1VkUGFrVlFTa2xZYTJSTFRsRmtZVGRGZFRGclNIVktPRlkyZUVRMFpGbEZWV3gyV2sxRlYxTkpZVXBqYUUxVWVHZGlZMHhsVmt4bFRsaGliRkpMVHdwcFRUSmxRV041Y0c5bFYwd3JZWFJGYzB0c1VWRndaazl0UkhaV1ZuaERNR1ZuU1Uwd1lUWlRTV3N3WkdSd1RYRkJjMmhoZWtwQ1ZYRkZZVnB5UWpWRkNsQTVjMWsxVldOallqZ3llbXRQY2tJd00xZHJUakV2VWpaWU9IVnNhRzQ0YTB0NVVVbEVOUzh6UXl0UGMwdE5NRTVaUW5wVWRubHpVbmhSTlhSRlduZ0tWSGxaU0dZeGFXb3hiamMwZFN0aVEza3JkWGRFVWpoM1J6UjBWVGxSTVRncmNrOXpLekZMWjBGVVZHcFNRVlJhZVdreVJIcHNNMUZ0VFRkeFVGUjZRZ3BYVnl0a1ZXUnJUMnREZW5OcVNHZDVUMEowTkRGdmFHZFVhekJ1UVdkTlFrRkJSMnBYVkVKWVRVRTBSMEV4VldSRWQwVkNMM2RSUlVGM1NVTndSRUZRQ2tKblRsWklVazFDUVdZNFJVSlVRVVJCVVVndlRVSXdSMEV4VldSRVoxRlhRa0pTTlRKbFZFVXJjVWhGTVZOcFRGUkJNblJ1UWpSVk5WRnljVVJFUVZZS1FtZE9Wa2hTUlVWRWFrRk5aMmR3Y21SWFNteGpiVFZzWkVkV2VrMUJNRWREVTNGSFUwbGlNMFJSUlVKRGQxVkJRVFJKUWtGUlJGZE1TbE5aVVVGdWFRcHROMHB4WlRsWlNtRTRSVzF4YzJreVIyc3hhWGxrV1dkdlRIZHRibmd4ZDFaemFpOUdReTlpTmxSRFkyMXRaWE5RVHpZMlFWQlJZMDF5VjBSbFUyUTRDamd5UVRCTFZqTnRNVVZaVVdob2J5OWxWV292VEM5SFJuQkVjV0k0YUhKb1VWZFJaWE4zTTJWRWNqbGxOa3QzUzBZNVExZDJZWGRGUldoUU5tVkxPWGtLV2xGaU4zcHlTaXRJVDJKSVMxVkNRV2xrZHpWaVZFUlVZV3gxYmpkM1Qyc3ZWamxGUjJWNlQwc3hkelJDTkhGQk9HNXZWazU0WVhJdk1VcFpWbk5FVlFwTGN5dE5Za1JDTlhodFExaHhXSEl4VTJ4dFdETlBRbnA0YURReFZqbERXazV5VTNKNlJVZzFhRTFTYjBKa1oyNUhjVEYxWWt0S1ZYcG9jeXRxWjJOdENrRmxNVE50VUVSM2RXMHhiREJrYUhsVWRUTk1lV0ptZUU5MWEyMVRXV1pJUjNWVVVVWkxUbVptYXl0Rk9GUXZkM2RUZFRSMlIyVjNTWFZIUXpGNEwzUUtVVVp0ZUdaUU9DOWhha3M1Q2kwdExTMHRSVTVFSUVORlVsUkpSa2xEUVZSRkxTMHRMUzBLCiAgICBjaWRyOiAxNzIuMjAuMC4wLzE2CiAgICBuYW1lOiBtYWdpY2ZpdC1la3MtZGV2CiAga3ViZWxldDoKICAgIGNvbmZpZzoKICAgICAgY2x1c3RlckROUzoKICAgICAgLSAxNzIuMjAuMC4xMAogICAgZmxhZ3M6CiAgICAtICItLW5vZGUtbGFiZWxzPWVrcy5hbWF6b25hd3MuY29tL25vZGVncm91cC1pbWFnZT1hbWktMDE3MDQ5ZGRjMTliYzRlYzYsZWtzLmFtYXpvbmF3cy5jb20vY2FwYWNpdHlUeXBlPU9OX0RFTUFORCxla3MuYW1hem9uYXdzLmNvbS9ub2RlZ3JvdXA9ZGVmYXVsdCIKCi0tLy8tLQ==",
+                "MetadataOptions": {
+                    "HttpTokens": "required",
+                    "HttpPutResponseHopLimit": 1,
+                    "InstanceMetadataTags": "disabled"
+                }
+            },
+            "Operator": {
+                "Managed": false
+            }
+        }
+    ]
+}
