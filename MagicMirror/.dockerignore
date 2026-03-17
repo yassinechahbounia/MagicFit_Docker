@@ -46,3 +46,4 @@ config/*.sample
 # Electron (inutile en mode server)
 js/electron.js
 
+node_modules/
