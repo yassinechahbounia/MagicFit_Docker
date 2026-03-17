@@ -89,4 +89,3 @@ jobs:
 
           # 3. Attendre que les déploiements soient stables
           kubectl rollout status deployment -n magicfit --timeout=300s
-##
