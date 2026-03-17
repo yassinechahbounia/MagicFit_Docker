@@ -86,4 +86,3 @@ jobs:
 
           kubectl apply -f k8s/ -n magicfit
           kubectl rollout status deployment -n magicfit --timeout=300s
-##
