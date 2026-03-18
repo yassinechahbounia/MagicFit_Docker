@@ -19,3 +19,4 @@ EXPOSE 8080
 
 # Start MagicMirror in server only mode
 CMD ["npm", "run", "server"]
+##
