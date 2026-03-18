@@ -17,9 +17,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            //"baseHref": "./magicfit",
+        
             "baseHref": "/",
-            "outputPath": "dist/magicfit-frontend",
+            "outputPath": "dist/magicfit-frontend/browser",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
