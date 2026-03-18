@@ -12,7 +12,7 @@ COPY package.json package-lock.json* ./
 COPY . .
 
 # Install npm dependencies (production tier)
-RUN npm install --no-audit --no-fund --omit=dev
+RUN npm install --no-audit --no-fund --omit=dev --ignore-scripts
 
 # Expose port (MagicMirror defaults to 8080)
 EXPOSE 8080
