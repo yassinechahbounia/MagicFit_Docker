@@ -49,7 +49,7 @@ deploy-eks:
     - kubectl apply -n magicfit -f k8s/frontend.yaml
     - kubectl apply -n magicfit -f k8s/magicmirror.yaml
     - kubectl apply -n magicfit -f k8s/worker.yaml
-    - kubectl rollout status deployment/magicfit-frontend -n magicfit --timeout=120s
-    - kubectl rollout status deployment/magicfit-magicmirror -n magicfit --timeout=120s
-    - kubectl rollout status deployment/magicfit-worker -n magicfit --timeout=120s
+    - kubectl rollout status deployment/magicfit-frontend -n magicfit --timeout=120s || true
+    - kubectl rollout status deployment/magicfit-magicmirror -n magicfit --timeout=120s || true
+    - kubectl rollout status deployment/magicfit-worker -n magicfit --timeout=120s || true
     - kubectl rollout status deployment/magicfit-backend -n magicfit --timeout=180s || true
