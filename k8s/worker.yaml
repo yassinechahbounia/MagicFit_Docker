@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: php-worker
-        image: 273220735056.dkr.ecr.us-east-1.amazonaws.com/magicfit-backend:latest
+        image: 158975163788.dkr.ecr.us-east-1.amazonaws.com/magicfit-backend:latest
         command: ["php", "artisan", "queue:work", "--queue=magicfit-queue", "--sleep=3", "--tries=3"]
         envFrom:
         - configMapRef:
