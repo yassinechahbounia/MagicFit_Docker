@@ -33,20 +33,12 @@ deploy-eks:
     - chmod +x kubectl && mv kubectl /usr/local/bin/
     - aws eks update-kubeconfig --name $EKS_CLUSTER --region $AWS_REGION
   script:
-    # Substitution des images
     - sed -i "s|BACKEND_IMAGE|$ECR_BASE/magicfit-backend:$CI_COMMIT_SHA|g" k8s/backend.yaml
     - sed -i "s|FRONTEND_IMAGE|$ECR_BASE/magicfit-frontend:$CI_COMMIT_SHA|g" k8s/frontend.yaml
     - sed -i "s|MAGICMIRROR_IMAGE|$ECR_BASE/magicfit-magicmirror:$CI_COMMIT_SHA|g" k8s/magicmirror.yaml
-    # Le worker utilise la même image que le backend (php artisan queue:work)
     - sed -i "s|WORKER_IMAGE|$ECR_BASE/magicfit-backend:$CI_COMMIT_SHA|g" k8s/worker.yaml
-
-    # Namespace (en premier)
     - kubectl apply -f k8s/namespace.yaml
-
-    # Ressources kube-system
     - kubectl apply -n kube-system -f k8s/aws-auth.yml
-
-    # Ressources namespace magicfit
     - kubectl apply -n magicfit -f k8s/storageclass.yaml
     - kubectl apply -n magicfit -f k8s/configmap.yaml
     - kubectl apply -n magicfit -f k8s/01-external-secrets-sa.yaml
@@ -57,9 +49,7 @@ deploy-eks:
     - kubectl apply -n magicfit -f k8s/frontend.yaml
     - kubectl apply -n magicfit -f k8s/magicmirror.yaml
     - kubectl apply -n magicfit -f k8s/worker.yaml
-
-    # Rollout status par deployment (backend toléré sur t3.micro à 512Mi)
     - kubectl rollout status deployment/magicfit-frontend -n magicfit --timeout=120s
     - kubectl rollout status deployment/magicfit-magicmirror -n magicfit --timeout=120s
     - kubectl rollout status deployment/magicfit-worker -n magicfit --timeout=120s
-    - kubectl rollout status deployment/magicfit-backend -n magicfit --timeout=180s || echo "WARNING: backend rollout slow due to t3.micro memory constraints"
+    - kubectl rollout status deployment/magicfit-backend -n magicfit --timeout=180s || true
