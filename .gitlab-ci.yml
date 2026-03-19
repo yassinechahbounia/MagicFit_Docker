@@ -37,6 +37,7 @@ deploy-eks:
     - sed -i "s|BACKEND_IMAGE|$ECR_BASE/magicfit-backend:$CI_COMMIT_SHA|g" k8s/backend.yaml
     - sed -i "s|FRONTEND_IMAGE|$ECR_BASE/magicfit-frontend:$CI_COMMIT_SHA|g" k8s/frontend.yaml
     - sed -i "s|MAGICMIRROR_IMAGE|$ECR_BASE/magicfit-magicmirror:$CI_COMMIT_SHA|g" k8s/magicmirror.yaml
+    - sed -i "s|WORKER_IMAGE|$ECR_BASE/magicfit-worker:$CI_COMMIT_SHA|g" k8s/worker.yaml
 
     # Namespace (en premier)
     - kubectl apply -f k8s/namespace.yaml
