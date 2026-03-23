@@ -4,7 +4,6 @@
 
 # Documentation
 README.md
-*.md
 
 # Docker
 Dockerfile
@@ -16,12 +15,15 @@ npm-debug.log*
 
 # PHP
 vendor
-#composer.lock
 
 # Laravel specific
 storage/logs/*
 bootstrap/cache/*
-.env*
+
+# Exclude .env but KEEP .env.example
+.env
+.env.local
+.env.*.local
 
 # Tests
 tests
@@ -34,3 +36,6 @@ phpunit.xml
 # OS
 .DS_Store
 Thumbs.db
+
+# Archives
+*.rar

@@ -23,6 +23,8 @@ build-and-push:
     - docker push $ECR_BASE/magicfit-frontend:$CI_COMMIT_SHA
     - docker build -t $ECR_BASE/magicfit-magicmirror:$CI_COMMIT_SHA ./MagicMirror
     - docker push $ECR_BASE/magicfit-magicmirror:$CI_COMMIT_SHA
+    - docker build -t $ECR_BASE/magicfit-magicmirror-proxy:$CI_COMMIT_SHA ./MagicMirror/proxy
+    - docker push $ECR_BASE/magicfit-magicmirror-proxy:$CI_COMMIT_SHA
 
 deploy-eks:
   stage: deploy
@@ -33,23 +35,32 @@ deploy-eks:
     - chmod +x kubectl && mv kubectl /usr/local/bin/
     - aws eks update-kubeconfig --name $EKS_CLUSTER --region $AWS_REGION
   script:
+    # Substituer les placeholders d'images dans les fichiers k8s/
     - sed -i "s|BACKEND_IMAGE|$ECR_BASE/magicfit-backend:$CI_COMMIT_SHA|g" k8s/backend.yaml
     - sed -i "s|FRONTEND_IMAGE|$ECR_BASE/magicfit-frontend:$CI_COMMIT_SHA|g" k8s/frontend.yaml
-    - sed -i "s|MAGICMIRROR_IMAGE|$ECR_BASE/magicfit-magicmirror:$CI_COMMIT_SHA|g" k8s/magicmirror.yaml
     - sed -i "s|WORKER_IMAGE|$ECR_BASE/magicfit-backend:$CI_COMMIT_SHA|g" k8s/worker.yaml
+    - sed -i "s|MAGICMIRROR_IMAGE|$ECR_BASE/magicfit-magicmirror:$CI_COMMIT_SHA|g" k8s/magicmirror.yaml
+    - sed -i "s|MAGICMIRROR_PROXY_IMAGE|$ECR_BASE/magicfit-magicmirror-proxy:$CI_COMMIT_SHA|g" k8s/magicmirror.yaml
+    # Appliquer les manifests K8s
     - kubectl apply -f k8s/namespace.yaml
     - kubectl apply -n kube-system -f k8s/aws-auth.yml
     - kubectl apply -n magicfit -f k8s/storageclass.yaml
     - kubectl apply -n magicfit -f k8s/configmap.yaml
     - kubectl apply -n magicfit -f k8s/01-external-secrets-sa.yaml
+    - kubectl apply -n magicfit -f k8s/02-secretstore-aws.yaml
+    - kubectl apply -n magicfit -f k8s/03-externalsecret-magicfit.yaml
     - kubectl apply -n magicfit -f k8s/db.yaml
+    - kubectl apply -n magicfit -f k8s/backend-ngnix-config.yaml
     - kubectl apply -n magicfit -f k8s/backend.yaml
     - kubectl apply -n magicfit -f k8s/backend-hpa.yaml
-    - kubectl apply -n magicfit -f k8s/backend-ngnix-config.yaml
+    - kubectl apply -n magicfit -f k8s/frontend-nginx-config.yaml
+    - kubectl apply -n magicfit -f k8s/frontend-nginx-global.yaml
     - kubectl apply -n magicfit -f k8s/frontend.yaml
+    - kubectl apply -n magicfit -f k8s/magicmirror-nginx-config.yaml
     - kubectl apply -n magicfit -f k8s/magicmirror.yaml
     - kubectl apply -n magicfit -f k8s/worker.yaml
+    # Attendre les rollouts
+    - kubectl rollout status deployment/magicfit-backend -n magicfit --timeout=180s || true
     - kubectl rollout status deployment/magicfit-frontend -n magicfit --timeout=120s || true
     - kubectl rollout status deployment/magicfit-magicmirror -n magicfit --timeout=120s || true
     - kubectl rollout status deployment/magicfit-worker -n magicfit --timeout=120s || true
-    - kubectl rollout status deployment/magicfit-backend -n magicfit --timeout=180s || true

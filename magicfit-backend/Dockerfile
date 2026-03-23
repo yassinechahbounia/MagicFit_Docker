@@ -1,7 +1,7 @@
 FROM composer:2.7 AS build
 
 WORKDIR /app
-COPY composer.json ./
+COPY composer.json composer.lock ./
 RUN composer install \
     --no-dev \
     --prefer-dist \
@@ -25,7 +25,11 @@ RUN apk add --no-cache --virtual .build-deps \
 WORKDIR /var/www/html
 COPY --from=build /app /var/www/html
 
-# Créer les dossiers Laravel AVANT le chown (absents du .gitignore)
+# Copier le script d'entrée
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Créer les dossiers Laravel AVANT le chown
 RUN mkdir -p \
       storage/logs \
       storage/framework/cache \
@@ -37,4 +41,4 @@ RUN mkdir -p \
 
 EXPOSE 9000
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["php-fpm"]
+CMD ["/usr/local/bin/docker-entrypoint.sh"]

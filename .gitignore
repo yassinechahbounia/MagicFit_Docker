@@ -68,7 +68,6 @@ out-tsc/
 *.sqlite
 *.sqlite3
 *.db
-*.sql
 
 # =====================
 # Laravel (Backend)
@@ -83,7 +82,7 @@ magicfit-backend/storage/logs/*
 magicfit-backend/bootstrap/cache/*
 magicfit-backend/.env
 magicfit-backend/.env.*
-magicfit-backend/composer.lock
+!magicfit-backend/.env.example
 magicfit-backend/database/database.sqlite
 magicfit-backend/database/migrations/*.php.backup
 
@@ -117,8 +116,8 @@ MagicMirror/.vscode/
 storage/app/*
 storage/app/private/
 storage/app/public/
-migrations/
-migrations/*.php.backup
+/migrations/
+/migrations/*.php.backup
 
 # =====================
 # IDEs & editors
