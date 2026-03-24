@@ -11,10 +11,14 @@ RUN composer install \
     --optimize-autoloader
 COPY . .
 
-FROM php:8.2-fpm-alpine
+FROM php:8.2-fpm
 
-RUN apk add --no-cache bash tini curl
- 
+RUN apt-get update && apt-get install -y \
+    bash \
+    tini \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install PHP extensions more reliably
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 RUN chmod +x /usr/local/bin/install-php-extensions \
