@@ -63,7 +63,7 @@ export class MirrorComponent implements OnInit {
   }
 
   afficher() {
-    this.http.get('`${environment.apiUrl}/api/mirror/afficher-horloge').subscribe({
+    this.http.get(`${environment.apiUrl}/api/mirror/afficher-horloge`).subscribe({
       next: () => console.log('Horloge affichée'),
       error: (error) => console.error('Erreur lors de l\'affichage de l\'horloge:', error)
     });

@@ -1,7 +1,7 @@
 FROM composer:2.7 AS build
 
 WORKDIR /app
-COPY composer.json composer.lock ./
+COPY composer.json ./
 RUN composer install \
     --no-dev \
     --prefer-dist \

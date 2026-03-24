@@ -55,7 +55,8 @@ module "eks" {
   cluster_name       = "magicfit-eks-dev"
   vpc_id             = module.vpc.vpc_id
   subnet_ids         = module.vpc.private_subnet_ids
-  node_instance_type = "t3.micro"
+  #node_instance_type = "t3.micro"
+  node_instance_type = "t3.small"
   node_desired_size  = 2
   node_min_size      = 1
   node_max_size      = 3

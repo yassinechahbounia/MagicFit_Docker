@@ -21,11 +21,11 @@ export class CoachUsersComponent implements OnInit {
     const headers = this.getHeaders();
 
     // Récupérer tous les utilisateurs
-    this.http.get<any[]>('`${environment.apiUrl}/api/users', { headers })
+    this.http.get<any[]>(`${environment.apiUrl}/api/users`, { headers })
       .subscribe(users => this.allUsers = users);
 
     // Récupérer tous les programmes
-    this.http.get<any[]>('`${environment.apiUrl}/api/programmes', { headers })
+    this.http.get<any[]>(`${environment.apiUrl}/api/programmes`, { headers })
       .subscribe(programmes => this.programmes = programmes);
   }
 

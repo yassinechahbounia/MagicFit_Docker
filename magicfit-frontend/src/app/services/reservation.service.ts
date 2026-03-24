@@ -13,7 +13,7 @@ export class ReservationService {
     'Authorization': `Bearer ${token}`
   });
 
-  return this.http.get<Reservation[]>('`${environment.apiUrl}/api/reservations', { headers });
+  return this.http.get<Reservation[]>(`${environment.apiUrl}/api/reservations`, { headers });
 }
 
 createReservation(data: Reservation): Observable<any> {
@@ -22,7 +22,7 @@ createReservation(data: Reservation): Observable<any> {
     'Authorization': `Bearer ${token}`
   });
 
-  return this.http.post('`${environment.apiUrl}/api/reservations', data, { headers });
+  return this.http.post(`${environment.apiUrl}/api/reservations`, data, { headers });
 }
 
 updateReservation(id: number, data: Reservation): Observable<any> {

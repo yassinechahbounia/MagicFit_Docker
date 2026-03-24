@@ -13,7 +13,7 @@ data:
       default_type application/octet-stream;
 
       upstream backend {
-        server magicfit-backend:80;
+        server magicfit-backend.magicfit.svc.cluster.local:80;
       }
 
       server {
