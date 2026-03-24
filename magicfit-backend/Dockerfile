@@ -13,14 +13,12 @@ COPY . .
 
 FROM php:8.2-fpm-alpine
 
-RUN apk add --no-cache \
-    libpng libjpeg-turbo freetype libzip oniguruma bash tini curl
-
-RUN apk add --no-cache --virtual .build-deps \
-    $PHPIZE_DEPS libpng-dev libjpeg-turbo-dev freetype-dev libzip-dev oniguruma-dev \
-  && docker-php-ext-configure gd --with-freetype --with-jpeg \
-  && docker-php-ext-install pdo_mysql mbstring bcmath gd zip \
-  && apk del .build-deps
+RUN apk add --no-cache bash tini curl
+ 
+# Install PHP extensions more reliably
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+RUN chmod +x /usr/local/bin/install-php-extensions \
+    && install-php-extensions pdo_mysql mbstring bcmath gd zip
 
 WORKDIR /var/www/html
 COPY --from=build /app /var/www/html
