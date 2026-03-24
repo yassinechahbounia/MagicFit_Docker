@@ -1,228 +1,168 @@
-# MagicFit – Cloud-Native Fitness Platform
+# 🚀 MagicFit – Plateforme Fitness Cloud-Native Intelligente
 
-MagicFit is a comprehensive, cloud-native fitness management platform designed for scalability, reliability, and extensibility. It leverages microservices architecture, containerization, and CI/CD automation to deliver a seamless experience for users and developers.
+[![Laravel](https://img.shields.io/badge/Laravel-10.x-FF2D20?style=for-the-badge&logo=laravel)](https://laravel.com)
+[![Angular](https://img.shields.io/badge/Angular-19.x-DD0031?style=for-the-badge&logo=angular)](https://angular.io)
+[![AWS EKS](https://img.shields.io/badge/AWS_EKS-Orchestration-FF9900?style=for-the-badge&logo=amazonaws)](https://aws.amazon.com/eks/)
+[![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?style=for-the-badge&logo=docker)](https://www.docker.com/)
+[![Terraform](https://img.shields.io/badge/Terraform-IaC-623CE4?style=for-the-badge&logo=terraform)](https://www.terraform.io/)
 
----
-
-## Table of Contents
-- [Overview](#overview)
-- [Architecture](#architecture)
-- [Features](#features)
-- [Project Structure](#project-structure)
-- [Local Development](#local-development)
-- [Cloud Deployment (AWS EKS)](#cloud-deployment-aws-eks)
-- [CI/CD Pipeline](#cicd-pipeline)
-- [Secrets & Configuration](#secrets--configuration)
-- [Database](#database)
-- [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
-- [License](#license)
+**MagicFit** est une plateforme de fitness révolutionnaire conçue pour offrir une expérience immersive et connectée. Grâce à l'intégration d'un miroir intelligent (**MagicMirror**), d'un backend robuste en **Laravel** et d'un frontend moderne en **Angular**, MagicFit redéfinit la gestion de l'entraînement sportif dans un environnement Cloud-Native hautement évolutif.
 
 ---
 
-## Overview
-MagicFit consists of:
-- **Frontend**: Angular SPA for user interaction.
-- **Backend**: Laravel REST API for business logic and data management.
-- **MagicMirror**: Smart mirror interface for real-time fitness feedback.
-- **Infrastructure**: Docker, Kubernetes (EKS), AWS services, GitHub Actions for CI/CD.
+## 📋 Sommaire
+- [🌟 Points Forts](#-points-forts)
+- [🏗️ Architecture du Système](#️-architecture-du-système)
+- [🛠️ Stack Technique](#️-stack-technique)
+- [💻 Installation & Configuration Locale](#-installation--configuration-locale)
+- [☁️ Déploiement Cloud (AWS EKS)](#️-déploiement-cloud-aws-eks)
+- [🔄 CI/CD & Automatisation](#-cicd--automatisation)
+- [🔌 Aperçu de l'API](#-aperçu-de-lapi)
+- [🛡️ Sécurité & Maintenance](#️-sécurité--maintenance)
 
 ---
 
-## Architecture
-
-![AWS Cloud Architecture](Architecture%20AWS%20Cloud.png)
-
-### Main Components
-- **Microservices**: Each component runs in its own container/pod for isolation and scalability.
-- **Kubernetes (EKS)**: Orchestrates deployment, scaling, and management of containers.
-- **AWS Services**: ECR (container registry), Secrets Manager, CloudWatch, IAM, VPC, RDS (recommended for DB).
-- **CI/CD**: Automated build, test, and deployment via GitHub Actions.
-- **Monitoring & Logging**: CloudWatch for metrics, logs, dashboards, and alerts.
-- **Secrets Management**: AWS Secrets Manager and External Secrets Operator for secure secret injection.
-- **Networking**: VPC with public/private subnets, security groups, and load balancers.
-
-### Recommendations for Improvement
-- Use Amazon RDS for managed database (high availability, backups).
-- Add Application Load Balancer (ALB) for secure service exposure and SSL termination.
-- Integrate Prometheus/Grafana for advanced monitoring and custom metrics.
-- Implement centralized logging (ELK/OpenSearch) for better log aggregation and search.
-- Set up automated backups and disaster recovery for persistent data.
-- Enhance IAM and network security policies for least privilege and isolation.
-- Use CloudFront CDN for frontend assets to improve global performance.
-- Add alerting and notification integrations (Slack, email, etc.).
+## 🌟 Points Forts
+- **Interface Miroir Intelligente** : Affichage temps réel, modules personnalisables et contrôle à distance.
+- **Coach Virtuel IA** : Conseils personnalisés basés sur l'intelligence artificielle (DeepSeek).
+- **Architecture Microservices** : Composants isolés pour une scalabilité et une fiabilité maximales.
+- **Automatisation Totale** : Provisioning via Terraform et déploiement continu via GitHub Actions/GitLab CI.
+- **Gestion Sécurisée** : Centralisation des secrets via AWS Secrets Manager.
 
 ---
 
-## Features
-- User authentication and management
-- Fitness program tracking
-- Real-time feedback via MagicMirror
-- Responsive web interface
-- Scalable cloud deployment
-- Automated CI/CD pipeline
-- Secure secrets management
-- Monitoring and logging
+## 🏗️ Architecture du Système
+
+### Schéma d'Architecture Cloud
+![Architecture AWS Cloud](Architecture%20AWS%20Cloud.png)
+
+### Composants Applicatifs
+1.  **magicfit-backend** : API REST développée avec Laravel 10. Gère la logique métier, l'authentification (Sanctum), et l'accès aux données.
+2.  **magicfit-frontend** : Single Page Application (SPA) sous Angular 19. Interface utilisateur réactive et intuitive.
+3.  **MagicMirror** : Interface miroir intelligente utilisant Node.js, communiquant en temps réel avec le backend.
+4.  **Bases de Données** : MySQL/MariaDB pour le stockage persistant, orchestré localement par Docker ou via Amazon RDS en production.
 
 ---
 
-## Project Structure
-```
-magicfit-backend/      # Laravel API (REST, migrations, business logic)
-magicfit-frontend/     # Angular SPA (UI, routing, API calls)
-MagicMirror/           # Smart mirror interface (custom modules)
-k8s/                   # Kubernetes manifests (deployments, services, hpa, secrets, configmaps)
-infra/                 # Terraform & AWS configs (infrastructure as code)
-.github/workflows/     # CI/CD pipelines (GitHub Actions)
-docker-compose*.yml    # Local Docker configs (dev, prod)
-migrations/            # Database migrations (Laravel)
-storage/               # Persistent storage (Laravel)
-magicfit_mirror.sql    # SQL dump for initial DB setup
-Etapes.txt             # Project steps and documentation
-```
+## 🛠️ Stack Technique
+
+| Couche | Technologie |
+| :--- | :--- |
+| **Backend** | Laravel 10 (PHP 8.2), MySQL 8.0/MariaDB 10.11 |
+| **Frontend** | Angular 19, TypeScript, Bootstrap 5.3 |
+| **Miroir** | MagicMirror² Core, Node.js 20 |
+| **Conteneurisation** | Docker, Docker Compose |
+| **Cloud (AWS)** | EKS, ECR, RDS, Secrets Manager, CloudWatch |
+| **Infrastructure** | Terraform (Infrastructure as Code) |
+| **CI/CD** | GitHub Actions, GitLab CI/CD |
 
 ---
 
-## Local Development
+## 💻 Installation & Configuration Locale
 
-### Prerequisites
-- Docker & Docker Compose
-- Node.js & npm
-- PHP & Composer
-- MySQL
-- AWS CLI (for cloud operations)
+### 🛡️ Prérequis
+- Docker Desktop
+- Node.js v20+ & npm
+- PHP 8.2 & Composer
+- Git
 
-### Backend (Laravel)
+### ⚡ Démarrage Rapide (Docker Compose)
+Le moyen le plus simple de lancer MagicFit localement :
 ```powershell
+# Cloner le dépôt
+git clone <repository-url>
+cd MagicFit_Docker
+
+# Lancer tous les services
+docker-compose up --build
+```
+*Services disponibles :*
+- Frontend : `http://localhost:3000`
+- Backend API : `http://localhost:8082`
+- MagicMirror : `http://localhost:8081`
+- Database : `localhost:3307`
+
+### 🔧 Configuration Manuelle (Développement)
+Pour travailler spécifiquement sur un composant :
+
+**Backend :**
+```bash
 cd magicfit-backend
 composer install
 cp .env.example .env
 php artisan key:generate
-php artisan migrate
+php artisan migrate --seed
 php artisan serve
 ```
-- Configure `.env` for DB and app settings.
-- Use `php artisan migrate:fresh --seed` to reset and seed the database if needed.
 
-### Frontend (Angular)
-```powershell
+**Frontend :**
+```bash
 cd magicfit-frontend
 npm install
-ng serve --open
+ng serve
 ```
-- Edit `proxy.conf.json` to match backend API URL if needed.
-- Access via `http://localhost:4200` by default.
 
-### MagicMirror
-```powershell
-cd MagicMirror
-npm install
-npm start
+---
+
+## ☁️ Déploiement Cloud (AWS EKS)
+
+L'infrastructure est provisionnée de manière entièrement automatisée.
+
+### 1. Infrastructure (Terraform)
+Le dossier `infra/` contient les scripts Terraform pour créer :
+- Le VPC et les sous-réseaux (Public/Privé).
+- Le cluster EKS et les Node Groups.
+- Les registres ECR pour chaque service.
+
+### 2. Orchestration Kubernetes
+Les manifests dans `k8s/` gèrent le cycle de vie des pods :
+- **HPA (Horizontal Pod Autoscaler)** : Ajustement automatique de la capacité du backend selon la charge CPU.
+- **External Secrets** : Synchronisation sécurisée des secrets d'AWS Secrets Manager vers Kubernetes.
+- **Ingress/LoadBalancer** : Exposition sécurisée des services vers l'extérieur.
+
+```bash
+# Déploiement manuel vers EKS
+kubectl apply -f k8s/namespace.yaml
+kubectl apply -f k8s/ -n magicfit
 ```
-- Configure modules in `MagicMirror/config/config.js`.
-- Access via browser or dedicated hardware.
-
-### Database
-- Import `magicfit_mirror.sql` into your MySQL instance:
-  ```powershell
-  mysql -u <user> -p magicfit_mirror < magicfit_mirror.sql
-  ```
-- Configure DB credentials in `magicfit-backend/.env`.
-
-### Docker Compose (Local Full Stack)
-```powershell
-docker-compose -f docker-compose.dev.yml up --build
-```
-- Brings up backend, frontend, and database containers for local integration testing.
 
 ---
 
-## Cloud Deployment (AWS EKS)
+## 🔄 CI/CD & Automatisation
 
-1. **Build & Push Docker Images**
-   - Images are built and pushed to AWS ECR via GitHub Actions (`.github/workflows/deploy.dev.yml`).
-   - Manual build:
-     ```powershell
-     docker build -t magicfit-backend:latest ./magicfit-backend
-     docker tag magicfit-backend:latest <ECR_URL>/magicfit-backend:latest
-     docker push <ECR_URL>/magicfit-backend:latest
-     ```
+Le projet utilise **GitHub Actions** (principale) et **GitLab CI** pour l'automatisation.
 
-2. **Deploy to EKS**
-   - Use manifests in `k8s/` to deploy backend, frontend, MagicMirror, and supporting services:
-     ```powershell
-     kubectl apply -f k8s/namespace.yaml
-     kubectl apply -f k8s/backend.yaml -n magicfit
-     kubectl apply -f k8s/frontend.yaml -n magicfit
-     kubectl apply -f k8s/magicmirror.yaml -n magicfit
-     kubectl apply -f k8s/02-secretstore-aws.yaml -n magicfit
-     kubectl apply -f k8s/03-externalsecret-magicfit.yaml -n magicfit
-     kubectl rollout status deploy/magicfit-backend -n magicfit
-     kubectl rollout status deploy/magicfit-frontend -n magicfit
-     ```
-   - Secrets are managed via AWS Secrets Manager and External Secrets Operator.
-
-3. **Monitoring & Logging**
-   - CloudWatch for logs, metrics, dashboards, and alarms.
-   - Use `kubectl logs <pod>` for troubleshooting.
+### Pipeline Workflow :
+1.  **Build** : Construction des images Docker multi-étapes pour optimiser le poids.
+2.  **Push** : Envoi des images vers AWS ECR avec tags dynamiques (SHA du commit).
+3.  **Deploy** : Mise à jour des manifests K8s et déploiement progressif sur EKS.
+4.  **Verify** : Vérification de la santé des pods et rollback automatique en cas d'échec.
 
 ---
 
-## CI/CD Pipeline
-- **GitHub Actions** automates build, test, push, and deploy steps.
-- Rollback is triggered automatically on deployment failure.
-- See `.github/workflows/deploy.dev.yml` for details.
-- Pipeline steps:
-  1. Checkout code
-  2. Configure AWS credentials
-  3. Build & push Docker images
-  4. Deploy to EKS
-  5. Verify deployment & rollback on failure
+## 🔌 Aperçu de l'API
+
+L'API Laravel expose des points d'accès sécurisés (Sanctum) :
+
+- **Auth** : `POST /api/login`, `POST /api/register`
+- **Programmes** : `GET /api/programmes`, `POST /api/programmes`
+- **Exercices** : `GET /api/exercices`, `GET /api/exercices/{id}`
+- **Réservations** : `GET /api/reservations`, `POST /api/reservations`
+- **Miroir** : `POST /api/mirror/horloge/cacher`, `GET /api/mirror/status`
 
 ---
 
-## Secrets & Configuration
-- Secrets are stored in AWS Secrets Manager.
-- Synced to Kubernetes via External Secrets Operator (`k8s/02-secretstore-aws.yaml`, `k8s/03-externalsecret-magicfit.yaml`).
-- Sensitive data is never hardcoded.
-- Example secret keys: DB credentials, API keys, mailer settings.
+## 🛡️ Sécurité & Maintenance
+
+- **Surveillance** : CloudWatch collecte les logs des pods et les métriques de performance.
+- **Logging** : FluentBit est utilisé pour l'agrégation des logs vers CloudWatch Logs.
+- **Mise à jour** : Les déploiements Kubernetes utilisent la stratégie `RollingUpdate` pour garantir un temps d'arrêt nul.
 
 ---
 
-## Database
-- Default: MySQL (can be replaced by Amazon RDS for production).
-- Migrations are managed via Laravel (`magicfit-backend/database/migrations`).
-- Initial data via `magicfit_mirror.sql`.
-- For production, use managed DB (RDS) and enable automated backups.
+## 👥 Équipe & Licence
+- **Équipe de Développement** : MagicFit Team.
+- **Licence** : Ce projet est sous licence MIT.
 
 ---
-
-## Troubleshooting
-- **Backend not connecting to DB**: Check `.env` DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, DB_PASSWORD. Ensure DB is reachable from backend pod.
-- **Frontend API errors**: Ensure backend is running and accessible at the configured URL. Check CORS and proxy settings.
-- **Kubernetes issues**: Check pod logs (`kubectl logs <pod>`), service endpoints, and secret synchronization.
-- **CI/CD failures**: Review GitHub Actions logs and AWS permissions.
-- **MagicMirror issues**: Check module configuration and logs in MagicMirror directory.
-- **Docker issues**: Use `docker ps`, `docker logs <container>` for debugging.
-
----
-
-## Contributing
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Open a Pull Request
-5. Follow code style and documentation guidelines
-
----
-
-## License
-This project is licensed under the MIT License.
-
----
-
-For questions or support, please contact the MagicFit team.
-
----
-
-**Note:** Adapt this README as needed for your specific environment and requirements. For production, always follow best practices for security, scalability, and maintainability.
+*Note: Cette documentation est générée pour faciliter la prise en main technique du projet MagicFit.*
