@@ -8,9 +8,9 @@ RUN apk add --no-cache make gcc g++ python3 git
 COPY package.json package-lock.json* ./
 
 # Désactiver les scripts postinstall / install-vendor / install-fonts AVANT npm install
-RUN npm set-script postinstall "" \
-  && npm set-script install-vendor "" \
-  && npm set-script install-fonts ""
+RUN npm pkg set scripts.postinstall="" \
+  && npm pkg set scripts.install-vendor="" \
+  && npm pkg set scripts.install-fonts=""
 
 # Copier le reste des fichiers (modules, config, etc.)
 COPY . .
